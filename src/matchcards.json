@@ -1,0 +1,61 @@
+[{
+        "id": 1,
+        "image": "./assets/images/antman.jpg",
+        "clicked": false
+    },
+    {
+        "id": 2,
+        "image": "./assets/images/forceAwakens.jpg",
+        "clicked": false
+    },
+    {
+        "id": 3,
+        "image": "./assets/images/ghostbusters.jpg",
+        "clicked": false
+    },
+    {
+        "id": 4,
+        "image": "./assets/images/guardians.jpg",
+        "clicked": false
+    },
+    {
+        "id": 5,
+        "image": "./assets/images/hangover.jpg",
+        "clicked": false
+    },
+    {
+        "id": 6,
+        "image": "./assets/images/harryPotter.jpg",
+        "clicked": false
+    },
+    {
+        "id": 7,
+        "image": "./assets/images/jaws.jpg",
+        "clicked": false
+    },
+    {
+        "id": 8,
+        "image": "./assets/images/maleficent.jpg",
+        "clicked": false
+    },
+    {
+        "id": 9,
+        "image": "./assets/images/pirates.jpg",
+        "clicked": false
+    },
+    {
+        "id": 10,
+        "image": "./assets/images/skyfall.jpg",
+        "clicked": false
+    },
+    {
+        "id": 11,
+        "image": "./assets/images/spiderman.jpg",
+        "clicked": false
+    },
+    {
+        "id": 12,
+        "image": "./assets/images/stepBrothers.jpg",
+        "clicked": false
+    }
+]
