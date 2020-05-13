@@ -1,0 +1,61 @@
+    [{
+        "id": 1,
+        "name": "Destin",
+        "type": "location", 
+        "clicked": false
+    },
+    {
+        "id": 2,
+        "name": "Wake Boarding",
+        "type": "activity",
+        "clicked": false
+    },
+    {
+        "id": 3,
+        "name": "Kyaking",
+        "type": "activity",
+        "clicked": false
+    },
+    {
+        "id": 4,
+        "name": "Wind Surfing",
+        "type": "activity",
+        "clicked": false
+    },
+    {
+        "id": 5,
+        "name": "Sailing",
+        "type": "activity",
+        "clicked": false
+    },
+    {
+        "id": 6,
+        "name": "Snorkling",
+        "type": "activity",
+        "clicked": false
+    },
+    {
+        "id": 7,
+        "name": "Skiing",
+        "type": "activity",
+        "clicked": false
+    },
+    {
+        "id": 8,
+        "name": "Fishing",
+        "type": "activity",
+        "clicked": false
+    },
+    {
+        "id": 9,
+        "name": "Boating",
+        "type": "activity",
+        "clicked": false
+    },
+    {
+        "id": 10,
+        "name": "Parasailing",
+        "type": "activity",
+        "clicked": false
+    }
+]

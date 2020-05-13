@@ -32,30 +32,90 @@ const NavBar = () => {
 
   return (
     <div className="nav-container">
-      <Navbar color="light" light expand="md">
+      {/* <Navbar color="light" light expand="md"> */}
+      <Navbar color= "light" light expand="md">
         <Container>
           <NavbarBrand className="logo" />
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
               <NavItem>
-                <NavLink
+                <Button
                   tag={RouterNavLink}
                   to="/"
                   exact
-                  activeClassName="router-link-exact-active"
+                  // activeClassName="router-link-exact-active"
+                  className="btn btn-info"
                 >
                   Home
-                </NavLink>
+                </Button>
+              </NavItem>
+              
+              {/* <NavItem>
+                <Button
+                  tag={RouterNavLink}
+                  to="/"
+                  exact
+                  // color="primary"
+                  className= "btn btn-info"
+                  // activeClassName="router-link-exact-active"
+                >
+                  Saved
+                </Button>
+              </NavItem>
+              
+              <NavItem>
+                <Button
+                  id="mySnapps"
+                  tag={RouterNavLink}
+                  to="/"
+                  exact
+                  // color="primary"
+                  className= "btn btn-info"
+                  // activeClassName="router-link-exact-active"
+                >
+                  My Snapps
+                </Button>
+              </NavItem> */}
+
+            </Nav>
+
+            <Nav className="" navbar>
+            <NavItem>
+                <Button
+                  tag={RouterNavLink}
+                  to="/saved"
+                  exact
+                  // color="primary"
+                  className= "btn btn-info"
+                  // activeClassName="router-link-exact-active"
+                >
+                  Saved
+                </Button>
+              </NavItem>
+              
+              <NavItem>
+                <Button
+                  id="mySnapps"
+                  tag={RouterNavLink}
+                  to="/mysnapps"
+                  exact
+                  // color="primary"
+                  className= "btn btn-info"
+                  // activeClassName="router-link-exact-active"
+                >
+                  My Snapps
+                </Button>
               </NavItem>
             </Nav>
+
             <Nav className="d-none d-md-block" navbar>
               {!isAuthenticated && (
                 <NavItem>
                   <Button
                     id="qsLoginBtn"
-                    color="primary"
-                    className="btn-margin"
+                    // color="primary"
+                    className="btn btn-info"
                     onClick={() => loginWithRedirect({})}
                   >
                     Log in
@@ -67,8 +127,10 @@ const NavBar = () => {
                   <DropdownToggle nav caret id="profileDropDown">
                     <img
                       src={user.picture}
-                      alt="Profile"
-                      className="nav-user-profile rounded-circle"
+                      alt="Profile"                      
+                      //TODO: change background to correct color
+                      // className="nav-user-profile rounded-circle"
+                      className="nav-user-profile rounded-circle"                      
                       width="50"
                     />
                   </DropdownToggle>
@@ -119,7 +181,7 @@ const NavBar = () => {
                       src={user.picture}
                       alt="Profile"
                       className="nav-user-profile d-inline-block rounded-circle mr-3"
-                      width="50"
+                      width="50"                      
                     />
                     <h6 className="d-inline-block">{user.name}</h6>
                   </span>

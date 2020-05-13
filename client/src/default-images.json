@@ -1,0 +1,61 @@
+[{
+        "id": 1,
+        "image": "clickster/assets/images/audirs7.jpg",
+        "clicked": false
+    },
+    {
+        "id": 2,
+        "image": "clickster/assets/images/audirs5.jpg",
+        "clicked": false
+    },
+    {
+        "id": 3,
+        "image": "clickster/assets/images/audir8.jpg",
+        "clicked": false
+    },
+    {
+        "id": 4,
+        "image": "clickster/assets/images/chevrolet_camaro.jpg",
+        "clicked": false
+    },
+    {
+        "id": 5,
+        "image": "clickster/assets/images/chevrolet_corvette.jpg",
+        "clicked": false
+    },
+    {
+        "id": 6,
+        "image": "clickster/assets/images/ford_mustang_gt500.jpg",
+        "clicked": false
+    },
+    {
+        "id": 7,
+        "image": "clickster/assets/images/jaguar_f_type_r.jpg",
+        "clicked": false
+    },
+    {
+        "id": 8,
+        "image": "clickster/assets/images/mercedes_amg_gt.jpg",
+        "clicked": false
+    },
+    {
+        "id": 9,
+        "image": "clickster/assets/images/porsche_panamera.jpg",
+        "clicked": false
+    },
+    {
+        "id": 10,
+        "image": "clickster/assets/images/porshe718.jpg",
+        "clicked": false
+    },
+    {
+        "id": 11,
+        "image": "clickster/assets/images/porshe911.jpg",
+        "clicked": false
+    },
+    {
+        "id": 12,
+        "image": "clickster/assets/images/toyota_supra.jpg",
+        "clicked": false
+    }
+]

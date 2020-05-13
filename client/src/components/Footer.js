@@ -4,7 +4,7 @@ const Footer = () => (
   <footer className="bg-light p-3 text-center">
     <div className="logo" />
     <p>
-      Sample project provided by <a href="https://auth0.com">Auth0</a>
+      This app provided by your friends at <a href="/">Snapped</a>
     </p>
   </footer>
 );
