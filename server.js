@@ -4,7 +4,7 @@ const { join } = require("path");
 const morgan = require("morgan");
 const app = express();
 
-const port = process.env.SERVER_PORT || 3000;
+const port = process.env.SERVER_PORT || 3001;
 
 app.use(morgan("dev"));
 app.use(express.static(join(__dirname, "build")));
