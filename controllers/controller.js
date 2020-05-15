@@ -4,7 +4,7 @@ const multer = require("multer");
 const gridFsStorage = require("multer-gridfs-storage");
 const grid = require("gridfs-stream");
 const crypto = require("crypto");
-const mongoURI = "mongodb://localhost/testImageUpload";
+const mongoURI = "mongodb://localhost/snapped";
 const conn = mongoose.createConnection(mongoURI);
 
 module.exports = app => {

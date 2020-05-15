@@ -20,6 +20,8 @@ import {
 
 import { useAuth0 } from "../react-auth0-spa";
 
+import logo from "../assets/logo.svg";
+
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
@@ -30,12 +32,32 @@ const NavBar = () => {
       returnTo: window.location.origin
     });
 
+    var icon = (
+      <span class="logo">
+        <a href="/">
+          <img src="../assets/Snapped_Logo.png" height="33" width="120" alt="text here" /></a>
+      </span>
+    );
+
   return (
     <div className="nav-container">
       {/* <Navbar color="light" light expand="md"> */}
       <Navbar color= "light" light expand="md">
         <Container>
-          <NavbarBrand className="logo" />
+          {/* <NavbarBrand className="logo" />
+           */}
+          <NavbarBrand href="/">
+            <img
+              src="../assets/Snapped_Logo.png"
+              width=""
+              height="60"
+              className="d-inline-block align-top"
+              alt="React Bootstrap logo"
+            />
+          </NavbarBrand>
+          
+          {/* <a className="navbar-brand" href="#"><img src="assets/Snapped_Logo.png&amp;text=logo" /></a> */}
+
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>

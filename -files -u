@@ -1,0 +1,86 @@
+[1mdiff --cc client/node_modules/.bin/acorn[m
+[1mindex 558ebb98,c31c4304..00000000[m
+[1m--- a/client/node_modules/.bin/acorn[m
+[1m+++ b/client/node_modules/.bin/acorn[m
+[1mdiff --cc client/node_modules/.bin/ansi-html[m
+[1mindex 3dbfb3e4,95707248..00000000[m
+[1m--- a/client/node_modules/.bin/ansi-html[m
+[1m+++ b/client/node_modules/.bin/ansi-html[m
+[1mdiff --cc client/node_modules/.bin/atob[m
+[1mindex 50896794,59a6bf05..00000000[m
+[1m--- a/client/node_modules/.bin/atob[m
+[1m+++ b/client/node_modules/.bin/atob[m
+[1mdiff --cc client/node_modules/.bin/autoprefixer[m
+[1mindex 3d8838cb,42d21a88..00000000[m
+[1m--- a/client/node_modules/.bin/autoprefixer[m
+[1m+++ b/client/node_modules/.bin/autoprefixer[m
+[1mdiff --cc client/node_modules/.bin/babylon[m
+[1mindex 4177aa98,b066817f..00000000[m
+[1m--- a/client/node_modules/.bin/babylon[m
+[1m+++ b/client/node_modules/.bin/babylon[m
+[1mdiff --cc client/node_modules/.bin/browserslist[m
+[1mindex 1df3f2a4,5c05ea12..00000000[m
+[1m--- a/client/node_modules/.bin/browserslist[m
+[1m+++ b/client/node_modules/.bin/browserslist[m
+[1mdiff --cc client/node_modules/.bin/css-blank-pseudo[m
+[1mindex e6e46d42,3ce6ab49..00000000[m
+[1m--- a/client/node_modules/.bin/css-blank-pseudo[m
+[1m+++ b/client/node_modules/.bin/css-blank-pseudo[m
+[1mdiff --cc client/node_modules/.bin/css-has-pseudo[m
+[1mindex 8e5997a3,5cc64926..00000000[m
+[1m--- a/client/node_modules/.bin/css-has-pseudo[m
+[1m+++ b/client/node_modules/.bin/css-has-pseudo[m
+[1mdiff --cc client/node_modules/.bin/css-prefers-color-scheme[m
+[1mindex 33daa360,49e1179d..00000000[m
+[1m--- a/client/node_modules/.bin/css-prefers-color-scheme[m
+[1m+++ b/client/node_modules/.bin/css-prefers-color-scheme[m
+[1mdiff --cc client/node_modules/.bin/cssesc[m
+[1mindex d26a79a5,b8e1908a..00000000[m
+[1m--- a/client/node_modules/.bin/cssesc[m
+[1m+++ b/client/node_modules/.bin/cssesc[m
+[1mdiff --cc client/node_modules/.bin/detect[m
+[1mindex 8c5e7839,c04b5545..00000000[m
+[1m--- a/client/node_modules/.bin/detect[m
+[1m+++ b/client/node_modules/.bin/detect[m
+[1mdiff --cc client/node_modules/.bin/detect-port[m
+[1mindex 8c5e7839,c04b5545..00000000[m
+[1m--- a/client/node_modules/.bin/detect-port[m
+[1m+++ b/client/node_modules/.bin/detect-port[m
+[1mdiff --cc client/node_modules/.bin/errno[m
+[1mindex 9532c97e,ad848e68..00000000[m
+[1m--- a/client/node_modules/.bin/errno[m
+[1m+++ b/client/node_modules/.bin/errno[m
+[1mdiff --cc client/node_modules/.bin/escodegen[m
+[1mindex 4e46a489,aa70e8b4..00000000[m
+[1m--- a/client/node_modules/.bin/escodegen[m
+[1m+++ b/client/node_modules/.bin/escodegen[m
+[1mdiff --cc client/node_modules/.bin/esgenerate[m
+[1mindex 5d097c36,4a2495a6..00000000[m
+[1m--- a/client/node_modules/.bin/esgenerate[m
+[1m+++ b/client/node_modules/.bin/esgenerate[m
+[1mdiff --cc client/node_modules/.bin/eslint[m
+[1mindex 9f3ac314,3bb27616..00000000[m
+[1m--- a/client/node_modules/.bin/eslint[m
+[1m+++ b/client/node_modules/.bin/eslint[m
+[1mdiff --cc client/node_modules/.bin/esparse[m
+[1mindex 25255271,735d8546..00000000[m
+[1m--- a/client/node_modules/.bin/esparse[m
+[1m+++ b/client/node_modules/.bin/esparse[m
+[1mdiff --cc client/node_modules/.bin/esvalidate[m
+[1mindex 2137cd5c,d278bc70..00000000[m
+[1m--- a/client/node_modules/.bin/esvalidate[m
+[1m+++ b/client/node_modules/.bin/esvalidate[m
+[1mdiff --cc client/node_modules/.bin/he[m
+[1mindex e3e6a0a8,68370704..00000000[m
+[1m--- a/client/node_modules/.bin/he[m
+[1m+++ b/client/node_modules/.bin/he[m
+[1mdiff --cc client/node_modules/.bin/html-minifier-terser[m
+[1mindex 9eeb3b93,1e6c65d9..00000000[m
+[1m--- a/client/node_modules/.bin/html-minifier-terser[m
+[1m+++ b/client/node_modules/.bin/html-minifier-terser[m
+[1mdiff --cc client/node_modules/.bin/import-local-fixture[m
+[1mindex ceb37d3d,8cc916df..00000000[m
+[1m--- a/client/node_modules/.bin/import-local-fixture[m
+[1m+++ b/client/node_modules/.bin/import-local-fixture[m
+[1mdiff --cc client/node_modules/.bin/is-ci[m
+
