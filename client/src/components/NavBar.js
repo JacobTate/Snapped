@@ -32,17 +32,17 @@ const NavBar = () => {
       returnTo: window.location.origin
     });
 
-    var icon = (
-      <span class="logo">
-        <a href="/">
-          <img src="../assets/Snapped_Logo.png" height="33" width="120" alt="text here" /></a>
-      </span>
-    );
+  var icon = (
+    <span class="logo">
+      <a href="/">
+        <img src="../assets/Snapped_Logo.png" height="33" width="120" alt="text here" /></a>
+    </span>
+  );
 
   return (
     <div className="nav-container">
       {/* <Navbar color="light" light expand="md"> */}
-      <Navbar color= "light" light expand="md">
+      <Navbar color="EFF0F2" light expand="md">
         <Container>
           {/* <NavbarBrand className="logo" />
            */}
@@ -50,12 +50,12 @@ const NavBar = () => {
             <img
               src="../assets/Snapped_Logo.png"
               width=""
-              height="60"
-              className="d-inline-block align-top"
+              height="80"
+              // className="d-inline-block align-top"
               alt="React Bootstrap logo"
             />
           </NavbarBrand>
-          
+
           {/* <a className="navbar-brand" href="#"><img src="assets/Snapped_Logo.png&amp;text=logo" /></a> */}
 
           <NavbarToggler onClick={toggle} />
@@ -72,7 +72,7 @@ const NavBar = () => {
                   Home
                 </Button>
               </NavItem>
-              
+
               {/* <NavItem>
                 <Button
                   tag={RouterNavLink}
@@ -103,19 +103,19 @@ const NavBar = () => {
             </Nav>
 
             <Nav className="" navbar>
-            <NavItem>
+              <NavItem>
                 <Button
                   tag={RouterNavLink}
                   to="/saved"
                   exact
                   // color="primary"
-                  className= "btn btn-info"
-                  // activeClassName="router-link-exact-active"
+                  className="btn btn-info"
+                // activeClassName="router-link-exact-active"
                 >
                   Saved
                 </Button>
               </NavItem>
-              
+
               <NavItem>
                 <Button
                   id="mySnapps"
@@ -123,8 +123,8 @@ const NavBar = () => {
                   to="/mysnapps"
                   exact
                   // color="primary"
-                  className= "btn btn-info"
-                  // activeClassName="router-link-exact-active"
+                  className="btn btn-info"
+                // activeClassName="router-link-exact-active"
                 >
                   My Snapps
                 </Button>
@@ -149,10 +149,10 @@ const NavBar = () => {
                   <DropdownToggle nav caret id="profileDropDown">
                     <img
                       src={user.picture}
-                      alt="Profile"                      
+                      alt="Profile"
                       //TODO: change background to correct color
                       // className="nav-user-profile rounded-circle"
-                      className="nav-user-profile rounded-circle"                      
+                      className="nav-user-profile rounded-circle"
                       width="50"
                     />
                   </DropdownToggle>
@@ -203,7 +203,7 @@ const NavBar = () => {
                       src={user.picture}
                       alt="Profile"
                       className="nav-user-profile d-inline-block rounded-circle mr-3"
-                      width="50"                      
+                      width="50"
                     />
                     <h6 className="d-inline-block">{user.name}</h6>
                   </span>
