@@ -37,7 +37,9 @@ export const Auth0Provider = ({
       if (isAuthenticated) {
         const user = await auth0FromHook.getUser();
         setUser(user);
-        //console.log("user is: " + user.email)
+        console.log("user email is: " + user.email)
+        console.log("user nickname is: " + user.nickname)
+
       }
 
       setLoading(false);

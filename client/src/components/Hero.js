@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import Tags from "./Tags";
 import clickTags from "../tags.json"
 
-//import logo from "../assets/logo.svg";
+// import logo from "../assets/logo.svg";
 
 //const Hero = () => (
 class Hero extends Component {
