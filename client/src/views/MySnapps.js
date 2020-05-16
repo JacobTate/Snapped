@@ -15,21 +15,47 @@ class MySnapps extends Component {
 constructor (props) {
   super(props);
   this.state = {
+    fileName: [],
+    isLoaded: false
   }
 }
-
+getMyImages = (images) => {
+return(
+<div>{
+  images.map(image => (
+    <img key={image} src={image}>
+    </img>
+  ))
+  }</div>
+)
+};
+componentDidMount () {
+  axios("/mysnapps/api/showAll")
+  .then(res => {
+    console.log(res);
+    const imgArr = [];
+    for (let i = 0; i < res.data.files.length; i++) {
+    imgArr.push(res.data.files[i].filename);
+    }
+    this.setState({
+      fileName: imgArr,
+      isLoaded: true
+      });
+   });
+}
   render() {
   return (
     <Container>
-
           <form action="/upload" method="POST" encType="multipart/form-data">
           <div className="custom-file mb-3">
-            <input type="file" name="file" id="file" className="custom-file-input"></input>
+            <input accept="image/x-png,image/gif,image/jpeg" type="file" name="file" id="file" className="custom-file-input"></input>
             <label htmlFor="file" className="custom-file-label">Choose File</label>
           </div>
           <input type="submit" value="Submit" className="btn btn-primary btn-block"></input>
         </form>
-       
+  <div>{
+    this.state.isLoaded ? this.getMyImages(this.state.fileName): null
+    }</div>
     </Container>
   );
   }
