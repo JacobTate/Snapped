@@ -22,3 +22,4 @@ yarn-debug.log*
 yarn-error.log*
 
 auth_config.json
+./client/node_modules
