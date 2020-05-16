@@ -1,38 +1,55 @@
-//Dependencies
-var express = require("express");
-var mongoose = require("mongoose");
-var axios = require("axios");
-var cheerio = require("cheerio");
+const path = require("path");
+const mongoose = require("mongoose");
+const multer = require("multer");
+const gridFsStorage = require("multer-gridfs-storage");
+const grid = require("gridfs-stream");
+const crypto = require("crypto");
+const mongoURI = "mongodb://localhost/snapped";
+const conn = mongoose.createConnection(mongoURI);
 
-// Require all models
-var db = require("../models/index");
-
-// Connect to the Mongo DB
-// mongoose.connect("mongodb://localhost/reviews-on-wheels", { useNewUrlParser: true })
-//   .then(() =>  console.log('connection succesful'))
-//   .catch((err) => console.error(err));
-
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/reviews-on-wheels";
-mongoose.connect(MONGODB_URI);
-
-//Create router
-var router = express.Router();
-
-//Router to redirect to Index
-router.get("/", function (req, res) {
-  res.redirect("/home");
+module.exports = app => {
+let gfs;
+conn.once("open", () => {
+    gfs = grid(conn.db, mongoose.mongo);
+    gfs.collection("uploads");
 });
-
-//Route for inserting a new user into the Users schema
-router.post("/newuser/:id", function(req, res) {
-db.Users.create(req.body)
-  .then(function(dbUsers) {
-    res.json(dbUsers);
-  })
-  .catch(function(err) {
-    res.json(err);
+var storage = new gridFsStorage({
+    url: mongoURI,
+    file: (req, file) => {
+      return new Promise((resolve, reject) => {
+        crypto.randomBytes(16, (err, buf) => {
+          if (err) {
+            return reject(err);
+          }
+          const filename = buf.toString('hex') + path.extname(file.originalname);
+          const fileInfo = {
+            filename: filename,
+            bucketName: 'uploads'
+          };
+          resolve(fileInfo);
+        });
+      });
+    }
   });
-});
+  const upload = multer({ storage });
+  app.post("/upload", upload.single("file"), (req, res) => {
+   res.redirect("/mysnapps")
+  console.log(req.files);
+  });
+  app.get("/mysnapps/api/showAll", (req, res) => {
+  gfs.files.find().toArray((err, files) => {
+    if(err) throw err;
+    files.map(file => {
+      if(file.contentType === "image/jpeg" || file.contentType === "image/png"){
+        file.isImage = true;
+      }
+      else{
+        file.isImage = false;
+      }
+    });
+    res.json({files: files});
+    
+  });
 
-//Export routes for server.js to use
-module.exports = router;
+  });
+};
