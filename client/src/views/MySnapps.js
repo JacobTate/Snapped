@@ -15,7 +15,7 @@ class MySnapps extends Component {
 constructor (props) {
   super(props);
   this.state = {
-    fileName: [],
+    filePathArr: [],
     isLoaded: false
   }
 }
@@ -38,7 +38,7 @@ componentDidMount () {
     imgArr.push(res.data.files[i].filename);
     }
     this.setState({
-      fileName: imgArr,
+      filePathArr: imgArr,
       isLoaded: true
       });
    });
@@ -54,7 +54,7 @@ componentDidMount () {
           <input type="submit" value="Submit" className="btn btn-primary btn-block"></input>
         </form>
   <div>{
-    this.state.isLoaded ? this.getMyImages(this.state.fileName): null
+    this.state.isLoaded ? this.getMyImages(this.state.filePathArr): null
     }</div>
     </Container>
   );
