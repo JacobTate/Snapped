@@ -1,10 +1,15 @@
 import React, {Component} from "react";
 import { Container, Row, Col } from "reactstrap";
 import axios from "axios";
-import Highlight from "../components/Highlight";
-import Loading from "../components/Loading";
-import { useAuth0 } from "../react-auth0-spa";
-import { highlight } from "highlight.js";
+import {
+  Card, Button, CardImg, CardTitle, CardText, CardDeck,
+  CardSubtitle, CardBody
+} from 'reactstrap';
+// import Highlight from "../components/Highlight";
+// import Loading from "../components/Loading";
+// import { useAuth0 } from "../react-auth0-spa";
+// import { highlight } from "highlight.js";
+// import ImageCard from "../components/ImageCard";
 
 class MySnapps extends Component {
   // const { loading, user } = useAuth0();
@@ -23,8 +28,17 @@ getMyImages = (images) => {
 return(
 <div>{
   images.map(image => (
-    <img key={image} src={image}>
-    </img>
+    // <img key={image} src={image}>
+    // </img>
+    <Card>
+    <CardImg top width="100%" src={image} alt="Card image cap" />
+    <CardBody>
+        {/* <CardTitle>Card title</CardTitle>
+        <CardSubtitle>Card subtitle</CardSubtitle>
+        <CardText>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</CardText> */}
+        <a href={image} className="btn btn-primary" download>Download</a>
+    </CardBody>
+</Card>
   ))
   }</div>
 )
