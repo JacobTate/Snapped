@@ -5,6 +5,8 @@ import axios from "axios";
 const DEFAULT_REDIRECT_CALLBACK = () =>
   window.history.replaceState({}, document.title, window.location.pathname);
 
+let loopCounter = 0;
+
 export const Auth0Context = React.createContext();
 export const useAuth0 = () => useContext(Auth0Context);
 export const Auth0Provider = ({
@@ -17,6 +19,15 @@ export const Auth0Provider = ({
   const [auth0Client, setAuth0] = useState();
   const [loading, setLoading] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
+
+  //Get loopCounter from local storage
+  useEffect(() => {
+    const data = localStorage.getItem('loopCounter');
+    if (data) {     
+      console.log("loopCounter from LocalStorage: " + JSON.parse(data));
+      loopCounter = JSON.parse(data);
+    }
+  })
 
   useEffect(() => {
     const initAuth0 = async () => {
@@ -38,11 +49,32 @@ export const Auth0Provider = ({
       if (isAuthenticated) {
         const user = await auth0FromHook.getUser();
         setUser(user);
+        
         console.log("user email is: " + user.email)
         console.log("user nickname is: " + user.nickname)
-        axios.post("/username", {
-          email: user.email
-        });
+        console.log("user: " + JSON.stringify(user, null, 2))
+        console.log("logins: "+ user[Object.keys(user)[0]])
+      
+        if(user[Object.keys(user)[0]] === 1 && !loopCounter) {
+    
+          console.log("you are a new user: ")
+          
+          //Increment loopCounter and update localStorage
+          loopCounter += 1;
+          localStorage.setItem('loopCounter',JSON.stringify(loopCounter))
+      
+          //Add user to the Users schema
+          axios.post("/username", {
+            email: user.email,
+            name: user.nickname
+          });
+        } else {
+          
+          //Existing user, do not attempt to add to the user schema
+          console.log("you are an existing user")
+          loopCounter += 1;
+        }
+
       }
 
       setLoading(false);
@@ -73,6 +105,7 @@ export const Auth0Provider = ({
     setIsAuthenticated(true);
     setUser(user);
   };
+
   return (
     <Auth0Context.Provider
       value={{

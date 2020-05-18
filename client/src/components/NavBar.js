@@ -27,10 +27,19 @@ const NavBar = () => {
   const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const toggle = () => setIsOpen(!isOpen);
 
+  function logoff() {
+    //console.log("logging off")
+    
+    //delete local storage
+    localStorage.removeItem("loopCounter");
+
+    logoutWithRedirect()
+  };
+
   const logoutWithRedirect = () =>
-    logout({
-      returnTo: window.location.origin
-    });
+  logout({
+    returnTo: window.location.origin
+  });
 
   var icon = (
     <span class="logo">
@@ -168,7 +177,8 @@ const NavBar = () => {
                     </DropdownItem>
                     <DropdownItem
                       id="qsLogoutBtn"
-                      onClick={() => logoutWithRedirect()}
+                      //onClick={() => logoutWithRedirect()}
+                      onClick={() => logoff()}
                     >
                       <FontAwesomeIcon icon="power-off" className="mr-3" /> Log
                       out
@@ -222,7 +232,8 @@ const NavBar = () => {
                   <RouterNavLink
                     to="#"
                     id="qsLogoutBtn"
-                    onClick={() => logoutWithRedirect()}
+                    //onClick={() => logoutWithRedirect()}
+                    onClick={() => logoff()}
                   >
                     Log out
                   </RouterNavLink>

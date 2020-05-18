@@ -8,9 +8,14 @@ var UsersSchema = new Schema({
     required: true,
     unique: true
   },
-  photos: {
-    type: Array,
-  }
+  name: {
+    type: String,
+    required: true
+  },
+  photos: []
+  // photos: {
+  //   type: Array,
+  // }
   // nickname: {
   //   type: String,
   //   required: true 

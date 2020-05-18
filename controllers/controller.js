@@ -9,7 +9,9 @@ const conn = mongoose.createConnection(mongoURI);
 mongoose.connect(mongoURI, {
   useNewUrlParser: true
 });
-const Users = require("../models").Users;
+//const Users = require("../models").Users;
+var db = require("../models/index");
+
 module.exports = app => {
 
   let gfs;
@@ -45,17 +47,21 @@ module.exports = app => {
   });
 
   app.post("/upload", upload.single("file"), (req, res) => {
-    res.redirect("/mysnapps");
-    console.log(req.file.id);
-    const fileId = req.file.id;
-    app.post("/username", (req, res) => {
-      const userEmail = req.body.email
-      // Users.create().then(data => {
-      //   return Users.findOneAndUpdate({ email: userEmail }, { $push: {photos: fileId }  }, { new: true});
-      // })
-      Users.findOneAndUpdate({email: userEmail}, {$push: {photos: fileId}});
+
+    //console.log("req.file.id: " + req.file.id);
+    //console.log("req.body: " + JSON.stringify(req.file, null, 2))
+    //console.log("userEmail: " + req.body.userEmail)
+    //const fileId = req.file.id;
+    
+    db.Users.findOneAndUpdate({email: req.body.userEmail}, {$push: {photos: req.file.id}}, { new: true })
+    .then(function(dbUsers) {
+      //res.json(dbUsers);
+      res.redirect("/mysnapps");
+    })
+    .catch(function(err) {
+      res.json(err);
     });
- ;
+  
   });
 
   app.get("/mysnapps/api/showAll", (req, res) => {
@@ -122,9 +128,11 @@ module.exports = app => {
       });
 
   });
+
   app.post("/username", (req, res) => {
-    Users.create({
+    db.Users.create({
       email: req.body.email,
+      name: req.body.name,
       photos: []
     });
 
