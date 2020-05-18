@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import createAuth0Client from "@auth0/auth0-spa-js";
+import axios from "axios";
 
 const DEFAULT_REDIRECT_CALLBACK = () =>
   window.history.replaceState({}, document.title, window.location.pathname);
@@ -39,7 +40,9 @@ export const Auth0Provider = ({
         setUser(user);
         console.log("user email is: " + user.email)
         console.log("user nickname is: " + user.nickname)
-
+        axios.post("/username", {
+          email: user.email
+        });
       }
 
       setLoading(false);

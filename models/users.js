@@ -8,18 +8,21 @@ var UsersSchema = new Schema({
     required: true,
     unique: true
   },
-  nickname: {
-    type: String,
-    required: true 
-  },
-  photos: [{
-    type: Schema.Types.ObjectId,
-    ref: "Photos" //TODO: update to databasename provided by multer
-  }],
-  saved_photos: [{
-    type: Schema.Types.ObjectId,
-    ref: "Photos" //TODO: update to databasename provided by multer
-  }]
+  photos: {
+    type: Array,
+  }
+  // nickname: {
+  //   type: String,
+  //   required: true 
+  // },
+  // photos: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: "Photos" //TODO: update to databasename provided by multer
+  // }],
+  // saved_photos: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: "Photos" //TODO: update to databasename provided by multer
+  // }]
 });
 
 // This creates our model from the above schema, using mongoose's model method
