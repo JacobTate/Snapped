@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { Row, Col } from "reactstrap";
-import ImageCard from "../components/myImageCard";
+import ImageCard from "../components/allImageCard";
 // import "./index.css";
 
 import axios from "axios";
@@ -62,39 +62,38 @@ class ImageRender extends Component {
   };
 
   componentDidMount() {
-    axios.post("/api/myimages", {
-      userEmail: this.state.userEmail,
-    });
-
-    // axios("/mysnapps/api/showAll")
-    // .then(res => {
-    //   console.log(res);
-    //   const imgArr = [];
-    //   for (let i = 0; i < res.data.files.length; i++) {
-    //   imgArr.push(res.data.files[i].filename);
-    //   }
-    //   this.setState({
-    //     filePathArr: imgArr,
-    //     isLoaded: true
-    //     });
+    // axios.post("/api/myimages", {
+    //   userEmail: this.state.userEmail,
     // });
+
+    axios("/mysnapps/api/showAll")
+    .then(res => {
+      console.log(res);
+      const imgArr = [];
+      for (let i = 0; i < res.data.files.length; i++) {
+      imgArr.push(res.data.files[i].filename);
+      }
+      this.setState({
+        filePathArr: imgArr,
+        isLoaded: true
+        });
+    });
 
     console.log("where are we");
 
-    //axios("/api/show/myimages")
-    axios("/api/show/myimages").then((res) => {
-      console.log("res: " + res);
-      const imgArr = [];
+    // axios("/api/show/myimages").then((res) => {
+    //   console.log("res: " + res);
+    //   const imgArr = [];
 
-      for (let i = 0; i < res.data.files.length; i++) {
-        imgArr.push(res.data.files[i].filename);
-      }
+    //   for (let i = 0; i < res.data.files.length; i++) {
+    //     imgArr.push(res.data.files[i].filename);
+    //   }
 
-      this.setState({
-        filePathArr: imgArr,
-        isLoaded: true,
-      });
-    });
+    //   this.setState({
+    //     filePathArr: imgArr,
+    //     isLoaded: true,
+    //   });
+    // });
   }
   render() {
     return (
