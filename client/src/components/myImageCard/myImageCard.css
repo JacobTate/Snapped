@@ -17,10 +17,13 @@
 .card>.img-container>img {
     width: 150px;   
 } */
+
+
+
 .card-img-top {
-    height:125px;
+    height:100%;
     /* max-height: 150px; */
-    max-width: 150px;
+    max-width: 100%;
 }
 
 .card-body {
@@ -28,3 +31,14 @@
     /* background-color: pink; */
     display: flex;
 }
+/* .cardSize {
+    height: auto;
+    max-height: 250px;
+    width: auto;
+    max-width: 250px;
+}
+
+.CardListItem-main-card {
+    width: 100px;
+    height: 200px;
+  } */
