@@ -12,14 +12,11 @@ export default class Header extends Component {
   render() {
     return (
       <div className="row">
-
         <div className="jumbotron">
           <img src={jumbotron} width="100%" height="" />
         </div>
         <h3 className="tagline">Discover moments that you didn't know were Snapped. Free photos taken by a kind stranger with a camera. </h3>
-
       </div>
-
     );
   }
 } 
