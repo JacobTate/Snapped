@@ -29,7 +29,7 @@ const NavBar = () => {
 
   function logoff() {
     //console.log("logging off")
-    
+
     //delete local storage
     localStorage.removeItem("loopCounter");
 
@@ -37,9 +37,9 @@ const NavBar = () => {
   };
 
   const logoutWithRedirect = () =>
-  logout({
-    returnTo: window.location.origin
-  });
+    logout({
+      returnTo: window.location.origin
+    });
 
   var icon = (
     <span class="logo">
