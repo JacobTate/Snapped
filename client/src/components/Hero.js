@@ -3,9 +3,6 @@ import React, { Component } from "react";
 import Tags from "./Tags";
 import clickTags from "../tags.json"
 
-
-
-
 //const Hero = () => (
 class Hero extends Component {
 
@@ -13,13 +10,8 @@ class Hero extends Component {
     clickTags
   };
 
-
-
-
   render() {
     return (
-
-
       <form>
         <div className="text-center hero my-5">
           {/* <img className="mb-3 app-logo" src={logo} alt="React logo" width="120" /> */}
@@ -28,7 +20,6 @@ class Hero extends Component {
           <input className="form-group" type='text'
           // <button className="btn btn-link search-btn"> </button>
           />
-
 
           <div className="row">
 

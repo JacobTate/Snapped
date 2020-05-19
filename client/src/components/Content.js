@@ -15,16 +15,7 @@ class Content extends Component {
         <Row className="d-flex justify-content-between">
           {ImageData.map((image, i) => (
             <Col key={i} md={2} className="mb-4">
-
               <ImageCard image={image.link} tag={image.tag}  />
-
-              {/* <h6 className="mb-3">
-                <a href={col.link}>
-                  <FontAwesomeIcon icon="link" className="mr-2" />
-                  {col.title}
-                </a>
-              </h6>
-              <p>{col.description}</p> */}
             </Col>
           ))}
         </Row>
