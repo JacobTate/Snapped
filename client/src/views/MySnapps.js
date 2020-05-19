@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { Container, Row, Col } from "reactstrap";
-// import axios from "axios";
+ import axios from "axios";
 // import {
 //   Card, Button, CardImg, CardTitle, CardText, CardDeck,
 //   CardSubtitle, CardBody
@@ -12,6 +12,7 @@ import ImageRender from "../utils/ImageRender";
 //class MySnapps extends Component {
   const MySnapps = function () {
   const { loading, user } = useAuth0();
+
 
   // if (loading || !user) {
   //   return <Loading />;
@@ -68,7 +69,7 @@ import ImageRender from "../utils/ImageRender";
               </div>
               <input type="submit" value="Submit" className="btn btn-primary btn-block"></input>
             </form>
-        <ImageRender />
+        <ImageRender userEmail={user.email}/>
       </Container>
     );
   }

@@ -10,6 +10,7 @@ import {
     this.state = {
       filePathArr: [],
       isLoaded: false,
+      userEmail: props.userEmail
     }
   }
   
@@ -29,8 +30,25 @@ import {
   };
   
   componentDidMount () {
-    axios("/mysnapps/api/showAll")
-    .then(res => {
+     
+       axios.post("/api/myimages", {
+    userEmail: this.state.userEmail
+  });
+      
+    // axios("/mysnapps/api/showAll")
+    // .then(res => {
+    //   console.log(res);
+    //   const imgArr = [];
+    //   for (let i = 0; i < res.data.files.length; i++) {
+    //   imgArr.push(res.data.files[i].filename);
+    //   }
+    //   this.setState({
+    //     filePathArr: imgArr,
+    //     isLoaded: true
+    //     });
+    // });
+    axios("/api/show/myimages")
+     .then(res => {
       console.log(res);
       const imgArr = [];
       for (let i = 0; i < res.data.files.length; i++) {
