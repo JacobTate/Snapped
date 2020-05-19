@@ -1,59 +1,61 @@
 import React, {Component} from "react";
 import { Container, Row, Col } from "reactstrap";
-import axios from "axios";
-import {
-  Card, Button, CardImg, CardTitle, CardText, CardDeck,
-  CardSubtitle, CardBody
-} from 'reactstrap';
+// import axios from "axios";
+// import {
+//   Card, Button, CardImg, CardTitle, CardText, CardDeck,
+//   CardSubtitle, CardBody
+// } from 'reactstrap';
 import Loading from "../components/Loading";
 import { useAuth0 } from "../react-auth0-spa";
+import ImageRender from "../utils/ImageRender";
 
-class MySnapps extends Component {
-//  const { loading, user } = useAuth0();
+//class MySnapps extends Component {
+  const MySnapps = function () {
+  const { loading, user } = useAuth0();
 
   // if (loading || !user) {
   //   return <Loading />;
   // }
   
-  constructor (props) {
-    super(props);
-    this.state = {
-      filePathArr: [],
-      isLoaded: false
-    }
-  }
+  // constructor (props) {
+  //   super(props);
+  //   this.state = {
+  //     filePathArr: [],
+  //     isLoaded: false,
+  //   }
+  // }
   
-  getMyImages = (images) => {
-    return(
-    <div>{
-      images.map(image => (
-        <Card>
-          <CardImg top width="100%" src={image} alt="Card image cap" />
-          <CardBody>
-              <a href={image} className="btn btn-primary" download>Download</a>
-          </CardBody>
-        </Card>
-      ))
-    }</div>
-    )
-  };
+  // getMyImages = (images) => {
+  //   return(
+  //   <div>{
+  //     images.map(image => (
+  //       <Card>
+  //         <CardImg top width="100%" src={image} alt="Card image cap" />
+  //         <CardBody>
+  //             <a href={image} className="btn btn-primary" download>Download</a>
+  //         </CardBody>
+  //       </Card>
+  //     ))
+  //   }</div>
+  //   )
+  // };
   
-  componentDidMount () {
-    axios("/mysnapps/api/showAll")
-    .then(res => {
-      console.log(res);
-      const imgArr = [];
-      for (let i = 0; i < res.data.files.length; i++) {
-      imgArr.push(res.data.files[i].filename);
-      }
-      this.setState({
-        filePathArr: imgArr,
-        isLoaded: true
-        });
-    });
-  }
+  // componentDidMount () {
+  //   axios("/mysnapps/api/showAll")
+  //   .then(res => {
+  //     console.log(res);
+  //     const imgArr = [];
+  //     for (let i = 0; i < res.data.files.length; i++) {
+  //     imgArr.push(res.data.files[i].filename);
+  //     }
+  //     this.setState({
+  //       filePathArr: imgArr,
+  //       isLoaded: true
+  //       });
+  //   });
+  // }
 
-  render() {
+  
     return (
       <Container>
             <form action="/upload" method="POST" encType="multipart/form-data">
@@ -66,12 +68,10 @@ class MySnapps extends Component {
               </div>
               <input type="submit" value="Submit" className="btn btn-primary btn-block"></input>
             </form>
-            <div>{
-              this.state.isLoaded ? this.getMyImages(this.state.filePathArr): null
-            }</div>
+        <ImageRender />
       </Container>
     );
   }
-};
+
 
 export default MySnapps;

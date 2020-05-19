@@ -110,6 +110,10 @@ module.exports = app => {
       // return res.json(files);
     });
 
+app.get("/username", (req, res) => {
+console.log(req.body);
+
+});
   });
 
   app.get("/image/:filename", (req, res) => {
