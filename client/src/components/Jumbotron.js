@@ -7,7 +7,7 @@
 // export default Jumbotron;
 
 import React, { Component } from 'react';
-import jumbotron from "../assets/homeImageCrop.jpg";
+import jumbotron from "../assets/homeImageCrop.png";
 export default class Header extends Component {
   render() {
     return (
