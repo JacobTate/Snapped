@@ -12,50 +12,6 @@ import ImageRender from "../utils/ImageRender";
 //class MySnapps extends Component {
   const MySnapps = function () {
   const { loading, user } = useAuth0();
-
-
-  // if (loading || !user) {
-  //   return <Loading />;
-  // }
-  
-  // constructor (props) {
-  //   super(props);
-  //   this.state = {
-  //     filePathArr: [],
-  //     isLoaded: false,
-  //   }
-  // }
-  
-  // getMyImages = (images) => {
-  //   return(
-  //   <div>{
-  //     images.map(image => (
-  //       <Card>
-  //         <CardImg top width="100%" src={image} alt="Card image cap" />
-  //         <CardBody>
-  //             <a href={image} className="btn btn-primary" download>Download</a>
-  //         </CardBody>
-  //       </Card>
-  //     ))
-  //   }</div>
-  //   )
-  // };
-  
-  // componentDidMount () {
-  //   axios("/mysnapps/api/showAll")
-  //   .then(res => {
-  //     console.log(res);
-  //     const imgArr = [];
-  //     for (let i = 0; i < res.data.files.length; i++) {
-  //     imgArr.push(res.data.files[i].filename);
-  //     }
-  //     this.setState({
-  //       filePathArr: imgArr,
-  //       isLoaded: true
-  //       });
-  //   });
-  // }
-
   
     return (
       <Container>
@@ -69,8 +25,11 @@ import ImageRender from "../utils/ImageRender";
               </div>
               <input type="submit" value="Submit" className="btn btn-primary btn-block"></input>
             </form>
-        <ImageRender userEmail={user.email}/>
+        
+        <ImageRender userEmail={user.email}/>    
+      
       </Container>
+      
     );
   }
 

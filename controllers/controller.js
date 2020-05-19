@@ -72,132 +72,73 @@ module.exports = app => {
 
   });
   let userEmail;
+
   app.post("/api/myimages", (req, res) => {
     userEmail = req.body.userEmail
   });
+
   app.get("/api/show/myimages", (req, res) => {
     const userImages = [];
-    const userImageArr = [];
+    const allImages = [];
+    const userImagesArr = [];
+    //console.log("userEmail: " + userEmail);
     db.Users.find({
       email: userEmail
     }).then(data => {
-      gfs.find().toArray((err, files) => {
-      for (let i = 0; i < data[0].photos.length; i++) {
-        userImages.push(data[0].photos[i]);
-      };
-      for (let j = 0; j < files.length; j++) {
-        userImageArr.push(files[j]._id);
-      }
-      console.log(userImageArr);
-      
-      for (let i = 0; i < userImages.length; i++) {
-        for (let j = 0; j < userImageArr.length; j++) {
-          if(userImages[i] == userImageArr[j]){
-            console.log(true);
+        for (let x=0; x <data[0].photos.length; x++) {
+          //console.log("user.photos: " + data[0].photos[x]);
+          userImages.push(data[0].photos[x]);
+          console.log("userImages: " + userImages);
+        }
+
+        gfs.find().toArray((err,files) => {
+          
+          //console.log("images.length: " + allImages.length)
+          //console.log("files.length: " + files.length)
+          for (let z=0; z < userImages.length; z++) {
+            //console.log("z: " + z)
+            //console.log("userImages.length: " + userImages.length)
+            //console.log("userImages: " + userImages[z])
+            for (let y=0; y < files.length; y++) {
+              //console.log("Y: " + y)
+              //console.log("files._id: " + files[y]._id)
+              if (files[y]._id == String(userImages[z])) {  
+                //console.log("match found")
+                userImagesArr.push(files[y])
+              }
+              //console.log("userImagesArr: " + JSON.stringify(userImagesArr,null,2))
+            }
           }
           
-        }
-      }
-    });
-      if (!gfs) {
-        console.log("some error occured, check connection to db");
-        res.send("some error occured, check connection to db");
-        process.exit(0);
-      }
-     // console.log(userImagePathArr);
+          const f = userImagesArr
+              .map(file => {
+                if (
+                  file.contentType === "image/png" ||
+                  file.contentType === "image/jpeg"
+                ) {
+                  file.isImage = true;
+                  file.filename = "image/" + file.filename;
+                } else {
+                  file.isImage = false;
+                }
+                return file;
+              })
+              .sort((a, b) => {
+                return (
+                  new Date(b["uploadDate"]).getTime() -
+                  new Date(a["uploadDate"]).getTime()
+                );
+              });
+            
+              //console.log("f: " + JSON.stringify(f,null,2))
+
+              res.json({
+                files: f
+              });
       
-    
-      // gfs.find().toArray((err, files) => {
-      //   // check if files
-      //   if (!files || files.length === 0) {
-      //     // return res.render("index", {
-      //     //   files: false
-      //     // });
-      //   } else {
-      //     const f = files.map(file => {
-      //         if (
-      //           file.contentType === "image/png" ||
-      //           file.contentType === "image/jpeg"
-      //         ) {
-      //           file.isImage = true;
-      //           file.filename = "image/" + file.filename;
-      //         } else {
-      //           file.isImage = false;
-      //         }
-      //         return file;
-      //       })
-      //       .sort((a, b) => {
-      //         return (
-      //           new Date(b["uploadDate"]).getTime() -
-      //           new Date(a["uploadDate"]).getTime()
-      //         );
-      //       });
-
-      //     //return res.render("index", {
-      //     //return res.render("/mysnapps", {
-      //     //files: f
-      //     res.json({
-      //       files: f
-      //     });
-      //     //});
-      //   }
-
-      //   // return res.json(files);
-      // });
+        });
     });
   });
-
-
-  //   app.get("/mysnapps/api/showAll", (req, res) => {
-  //     if (!gfs) {
-  //       console.log("some error occured, check connection to db");
-  //       res.send("some error occured, check connection to db");
-  //       process.exit(0);
-  //     }
-  //     gfs.find().toArray((err, files) => {
-  //       // check if files
-  //       if (!files || files.length === 0) {
-  //         // return res.render("index", {
-  //         //   files: false
-  //         // });
-  //       } else {
-  //         const f = files
-  //           .map(file => {
-  //             if (
-  //               file.contentType === "image/png" ||
-  //               file.contentType === "image/jpeg"
-  //             ) {
-  //               file.isImage = true;
-  //               file.filename = "image/" + file.filename;
-  //             } else {
-  //               file.isImage = false;
-  //             }
-  //             return file;
-  //           })
-  //           .sort((a, b) => {
-  //             return (
-  //               new Date(b["uploadDate"]).getTime() -
-  //               new Date(a["uploadDate"]).getTime()
-  //             );
-  //           });
-
-  //         //return res.render("index", {
-  //         //return res.render("/mysnapps", {
-  //         //files: f
-  //         res.json({
-  //           files: f
-  //         });
-  //         //});
-  //       }
-
-  //       // return res.json(files);
-  //     });
-
-  // app.get("/username", (req, res) => {
-  // console.log(req.body);
-
-  // });
-  //   });
 
   app.get("/image/:filename", (req, res) => {
     const file = gfs
