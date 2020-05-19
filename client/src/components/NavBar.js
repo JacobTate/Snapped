@@ -59,7 +59,7 @@ const NavBar = () => {
             <img
               src="../assets/Snapped_Logo.png"
               width=""
-              height="80"
+              height="90"
               // className="d-inline-block align-top"
               alt="React Bootstrap logo"
             />
