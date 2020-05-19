@@ -156,3 +156,10 @@ span.input-group-addon {
   margin: 0px !important;
   padding: 0px !important;
 }
+
+.tagline {
+color: #79bcc8;
+font-family: 'Archivo Narrow', sans-serif;
+font-size: 27px;
+padding: 35px 35px 65px 35px;
+}
