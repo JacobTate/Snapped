@@ -46,7 +46,7 @@ class ImageRender extends Component {
         
           {images.map((image) => (
             <Col md={2} className="mb-4">
-              <ImageCard image={image} tag={image.tag} />
+              <ImageCard image={image} tag={image.tag}  />
 
               {/* <CardImg top width="100%" src={image} alt="Card image cap" /> */}
               {/* <CardBody>
