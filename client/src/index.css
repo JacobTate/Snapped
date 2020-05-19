@@ -132,10 +132,25 @@ code {
   width: 100%;
 }
 
-.css-g1d714-ValueContainer, .css-11hb7zxy-IndicatorsContainer, .css-tlfecz-indicatorContainer {
-  border: 3px solid rgba(91, 192, 222, 0.75);
+.search, .fa-2x{
+/* padding: 25px 0px 45px 25px; */
+display: inline-block;
+max-width: 90%;
+padding-left: 10px; 
+padding-top: 3px;
+padding-bottom: 10px;
+}
+
+.fa-search, .searchIcon {
+  color:rgba(91, 192, 222, 0.75);
+  background-color: white;
+  border: 0px;
   background: transparent;
-  transition: all 0.3s ease 0s;
+}
+
+.fa-search:hover {
+  color: #FFED4E;
+  background-color:white;
 }
 
 .form-group {

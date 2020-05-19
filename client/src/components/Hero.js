@@ -1,17 +1,11 @@
 import React, { Component } from "react";
+import {Button} from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Select from 'react-select';
 import Tags from "./Tags/Tags";
 import clickTags from "../tags.json"
 
-const scaryAnimals = [
-  { label: "Alligators", value: 1 },
-  { label: "Crocodiles", value: 2 },
-  { label: "Sharks", value: 3 },
-  { label: "Small crocodiles", value: 4 },
-  { label: "Smallest crocodiles", value: 5 },
-  { label: "Snakes", value: 6 },
-];
-
+const searchIcon = 'fa fa-search fa-2x m-0';
 const tagArray = [];
 
 clickTags.map(clickTags => {
@@ -20,47 +14,44 @@ clickTags.map(clickTags => {
 
 console.log("tagArray: " + JSON.stringify(tagArray))
 
-  //{this.state.clickTags.map(clickTags => (
-    // <Tags
-    //   myClick={this.myClick}
-    //   id={clickTags.id}
-    //   key={clickTags.id}
-    //   name={clickTags.name}
-    //   type={clickTags.type}
-    // />
-  //))};
-
 //const Hero = () => (
 class Hero extends Component {
 
+  // state = {
+  //   clickTags
+  // };
+
   state = {
-    clickTags
-  };
+    selectedOption: null,
+  }
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption });
+    console.log(`Option selected:`, selectedOption);
+  }
 
   render() {
+    const { selectedOption } = this.state;
     return (
       <form>
-        {/* </form><div className="text-center hero my-5"> */}
-        <div className="container">
-          {/* <img className="mb-3 app-logo" src={logo} alt="React logo" width="120" /> */}
-          {/* <h1 className="mb-4">React.js Sample Project</h1> */}
-          <h1 className="mb-3">Enter your Search Criteria</h1>
-          <input className="form-group" type='text'
-          // <button className="btn btn-link search-btn"> </button>
-          />
-
           <div className="app">
             <div className="container search">
-              <Select options={tagArray} isMulti />
+              <Select
+              isMulti
+              value={selectedOption}
+              onChange={this.handleChange}
+              options={tagArray}
+              />    
             </div>
-          </div>
-
     
-        </div>
-
+            <Button
+              id="searchBtn"
+              className={searchIcon}
+              href='/saved'
+            >
+            </Button>
+          </div>
       </form>
     );
-    //);
   };
 };
 
