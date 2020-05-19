@@ -166,4 +166,54 @@ module.exports = app => {
 
   });
 
+  //TODO: START
+
+    app.get("/mysnapps/api/showAll", (req, res) => {
+      if (!gfs) {
+        console.log("some error occured, check connection to db");
+        res.send("some error occured, check connection to db");
+        process.exit(0);
+      }
+      gfs.find().toArray((err, files) => {
+        // check if files
+        if (!files || files.length === 0) {
+          // return res.render("index", {
+          //   files: false
+          // });
+        } else {
+          const f = files
+            .map(file => {
+              if (
+                file.contentType === "image/png" ||
+                file.contentType === "image/jpeg"
+              ) {
+                file.isImage = true;
+                file.filename = "image/" + file.filename;
+              } else {
+                file.isImage = false;
+              }
+              return file;
+            })
+            .sort((a, b) => {
+              return (
+                new Date(b["uploadDate"]).getTime() -
+                new Date(a["uploadDate"]).getTime()
+              );
+            });
+
+          //return res.render("index", {
+          //return res.render("/mysnapps", {
+          //files: f
+          res.json({
+            files: f
+          });
+          //});
+        }
+
+        // return res.json(files);
+      });
+    });
+  //TODO: FINISH
+
+
 };
