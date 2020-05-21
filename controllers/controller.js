@@ -45,30 +45,30 @@ module.exports = app => {
   const upload = multer({
     storage
   });
-let userTag;
-app.post("/api/test/tag", (req, res) => {
- // console.log(req.body);
-  userTag = req.body.tag
-});
-  app.post("/upload", upload.single("file"), (req, res) => {
-   console.log(userTag);
-   db.LocationTags.findOneAndUpdate({
-    location: userTag
-  }, {
-    $push: {
-      images: req.file.id
-    }
-  }, {
-    new: true
-  })
-  .then(function (dbLocationTags) {
-    //res.json(dbUsers);
-    res.redirect("/mysnapps");
-    userTag = "";
-  })
-  .catch(function (err) {
-    res.json(err);
+  let userTag;
+  app.post("/api/test/tag", (req, res) => {
+    // console.log(req.body);
+    userTag = req.body.tag
   });
+  app.post("/upload", upload.single("file"), (req, res) => {
+    console.log(userTag);
+    db.LocationTags.findOneAndUpdate({
+        location: userTag
+      }, {
+        $push: {
+          images: req.file.id
+        }
+      }, {
+        new: true
+      })
+      .then(function (dbLocationTags) {
+        //res.json(dbUsers);
+        res.redirect("/mysnapps");
+        userTag = "";
+      })
+      .catch(function (err) {
+        res.json(err);
+      });
     //console.log("req.file.id: " + req.file.id);
     //console.log("req.body: " + JSON.stringify(req.file, null, 2))
     //console.log("userEmail: " + req.body.userEmail)
@@ -234,10 +234,10 @@ app.post("/api/test/tag", (req, res) => {
     });
   });
   //TODO: FINISH
-   const LocationTagsArr = ["Inlet", "Rosemary", "Seacrest", "Alys", "WaterSound", "Seagrove", "Seaside", "WaterColor", "Grayton", "Blue Mountain", "Gulf Place", "Dune Allen"];
-//only creates tags if they do not exist
+  const LocationTagsArr = ["Inlet", "Rosemary", "Seacrest", "Alys", "WaterSound", "Seagrove", "Seaside", "WaterColor", "Grayton", "Blue Mountain", "Gulf Place", "Dune Allen"];
+  //only creates tags if they do not exist
   db.LocationTags.find().then(data => {
-    if(data.length === 0 || !data){
+    if (data.length === 0 || !data) {
       for (let i = 0; i < LocationTagsArr.length; i++) {
         db.LocationTags.create({
           location: LocationTagsArr[i],
@@ -247,14 +247,56 @@ app.post("/api/test/tag", (req, res) => {
     }
   });
   app.get("/api/find/locationTags", (req, res) => {
-   let locationArr = [];
+    let locationArr = [];
     db.LocationTags.find().then(data => {
-     for (let j = 0; j < data.length; j++) {
-       locationArr.push(data[j].location);
-     }
-     res.json(locationArr)
+      for (let j = 0; j < data.length; j++) {
+        locationArr.push(data[j].location);
+      }
+      res.json(locationArr)
     });
   });
-
-
+  const activityTagsArr = ["Beach", "Lake", "Gulf of Mexico", "Dog", "Cats", "Kayak", "Boat", "Bike", "Skate", "Swimming", "Paddle Boarding", "Kite Boarding", "Wake Boarding", "Skiing", "Walking", "Animal", "Golf Cart", "Car", "Sunset", "Sunrise", "Kids", "Couple", "Family", "Woman", "Man", "Turtle", "Dolphin", "Shark", "Fish", "Crab", "Shell", "Reef", "Scuba Diving", "Snorkling", "Surfing", "Body Board", "Food", "Drinks", "Exercise", "Reading", "Beach", "Games", "Airplane", "Parasailing"];
+  //db.ActivityTags.find().then(data => {
+  //  if(data.length === 0 || !data){
+  // for (let i = 0; i < activityTagsArr.length; i++) {
+  //   db.ActivityTags.create({
+  //     tag: activityTagsArr[i],
+  //     images: []
+  //   });
+  // };
+  //}
+  //});
+  app.get("/api/getTags", (req, res) => {
+    let activityArr = [];
+    db.ActivityTags.find().then(data => {
+      for (let j = 0; j < data.length; j++) {
+        activityArr.push(data[j].tag);
+      }
+      res.json(activityArr)
+    });
+  });
+  let activityTag;
+  app.post("/api/tags/addImage", (req, res) => {
+    console.log(req.body.tag);
+    activityTag = req.body.tag;
+  });
+  app.post("/api/imageId", (req, res) => {
+    db.ActivityTags.findOneAndUpdate({
+      tag: activityTag
+    }, {
+      $push: {
+        images: req.body.imageId
+      }
+    }, {
+      new: true
+    })
+    .then(function (dbLocationTags) {
+      //res.json(dbUsers);
+      res.redirect("/mysnapps");
+      activityTag = "";
+    })
+    .catch(function (err) {
+      res.json(err);
+    });
+  });
 };
