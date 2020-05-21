@@ -53,14 +53,14 @@ module.exports = app => {
   app.post("/upload", upload.single("file"), (req, res) => {
     console.log(userTag);
     db.LocationTags.findOneAndUpdate({
-        location: userTag
-      }, {
-        $push: {
-          images: req.file.id
-        }
-      }, {
-        new: true
-      })
+      location: userTag
+    }, {
+      $push: {
+        images: req.file.id
+      }
+    }, {
+      new: true
+    })
       .then(function (dbLocationTags) {
         //res.json(dbUsers);
         res.redirect("/mysnapps");
@@ -75,14 +75,14 @@ module.exports = app => {
     //const fileId = req.file.id;
 
     db.Users.findOneAndUpdate({
-        email: req.body.userEmail
-      }, {
-        $push: {
-          photos: req.file.id
-        }
-      }, {
-        new: true
-      })
+      email: req.body.userEmail
+    }, {
+      $push: {
+        photos: req.file.id
+      }
+    }, {
+      new: true
+    })
       .then(function (dbUsers) {
         //res.json(dbUsers);
         res.redirect("/mysnapps");
@@ -258,12 +258,13 @@ module.exports = app => {
   const activityTagsArr = ["Beach", "Lake", "Gulf of Mexico", "Dog", "Cats", "Kayak", "Boat", "Bike", "Skate", "Swimming", "Paddle Boarding", "Kite Boarding", "Wake Boarding", "Skiing", "Walking", "Animal", "Golf Cart", "Car", "Sunset", "Sunrise", "Kids", "Couple", "Family", "Woman", "Man", "Turtle", "Dolphin", "Shark", "Fish", "Crab", "Shell", "Reef", "Scuba Diving", "Snorkling", "Surfing", "Body Board", "Food", "Drinks", "Exercise", "Reading", "Beach", "Games", "Airplane", "Parasailing"];
   //db.ActivityTags.find().then(data => {
   //  if(data.length === 0 || !data){
-  // for (let i = 0; i < activityTagsArr.length; i++) {
-  //   db.ActivityTags.create({
-  //     tag: activityTagsArr[i],
-  //     images: []
-  //   });
-  // };
+
+  for (let i = 0; i < activityTagsArr.length; i++) {
+    db.ActivityTags.create({
+      tag: activityTagsArr[i],
+      images: []
+    });
+  };
   //}
   //});
   app.get("/api/getTags", (req, res) => {
@@ -290,13 +291,13 @@ module.exports = app => {
     }, {
       new: true
     })
-    .then(function (dbLocationTags) {
-      //res.json(dbUsers);
-      res.redirect("/mysnapps");
-      activityTag = "";
-    })
-    .catch(function (err) {
-      res.json(err);
-    });
+      .then(function (dbLocationTags) {
+        //res.json(dbUsers);
+        res.redirect("/mysnapps");
+        activityTag = "";
+      })
+      .catch(function (err) {
+        res.json(err);
+      });
   });
 };
