@@ -5,6 +5,9 @@ import Select from 'react-select';
 import Tags from "./Tags/Tags";
 import clickTags from "../tags.json"
 
+import {Link} from 'react-router-dom'; //TODO:
+import history from "../utils/history"; //TODO:
+
 const searchIcon = 'fa fa-search fa-2x m-0';
 const tagArray = [];
 
@@ -12,14 +15,10 @@ clickTags.map(clickTags => {
   tagArray.push({"label": clickTags.name, "value": clickTags.id})
 })
 
-console.log("tagArray: " + JSON.stringify(tagArray))
+//console.log("tagArray: " + JSON.stringify(tagArray))
 
 //const Hero = () => (
 class Hero extends Component {
-
-  // state = {
-  //   clickTags
-  // };
 
   state = {
     selectedOption: null,
@@ -27,12 +26,14 @@ class Hero extends Component {
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
     console.log(`Option selected:`, selectedOption);
+    //console.log('state: ' + JSON.stringify(this.state))
   }
 
   render() {
     const { selectedOption } = this.state;
     return (
       <form>
+       {/* <form action="/searchresults" method="POST"> */}
           <div className="app">
             <div className="container search">
               <Select
@@ -45,10 +46,29 @@ class Hero extends Component {
     
             <Button
               id="searchBtn"
+              type="submit"
               className={searchIcon}
-              href='/saved'
+
+              onClick={() =>
+                history.push("/searchresults", {
+                  location: {selectedOption}
+                })
+              }
+
+              //href='/searchresults'
             >
             </Button>
+
+            {/* <Link to={{
+              pathname: "/searchresults",
+              state: {
+                location: {selectedOption}
+              }
+            }}>
+            New Submit
+            </Link> */}
+
+
           </div>
       </form>
     );

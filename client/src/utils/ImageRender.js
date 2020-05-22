@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Row, Col, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import ImageCard from "../components/myImageCard";
 import axios from "axios";
+
 class ImageRender extends Component {
   constructor(props) {
     super(props);

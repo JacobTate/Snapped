@@ -24,7 +24,7 @@ export const Auth0Provider = ({
   useEffect(() => {
     const data = localStorage.getItem('loopCounter');
     if (data) {     
-      console.log("loopCounter from LocalStorage: " + JSON.parse(data));
+      //console.log("loopCounter from LocalStorage: " + JSON.parse(data));
       loopCounter = JSON.parse(data);
     }
   })
@@ -50,14 +50,14 @@ export const Auth0Provider = ({
         const user = await auth0FromHook.getUser();
         setUser(user);
         
-        console.log("user email is: " + user.email)
-        console.log("user nickname is: " + user.nickname)
-        console.log("user: " + JSON.stringify(user, null, 2))
-        console.log("logins: "+ user[Object.keys(user)[0]])
+        // console.log("user email is: " + user.email)
+        // console.log("user nickname is: " + user.nickname)
+        // console.log("user: " + JSON.stringify(user, null, 2))
+        // console.log("logins: "+ user[Object.keys(user)[0]])
       
         if(user[Object.keys(user)[0]] === 1 && !loopCounter) {
     
-          console.log("you are a new user: ")
+          //console.log("you are a new user: ")
           
           //Increment loopCounter and update localStorage
           loopCounter += 1;
@@ -71,7 +71,7 @@ export const Auth0Provider = ({
         } else {
           
           //Existing user, do not attempt to add to the user schema
-          console.log("you are an existing user")
+          //console.log("you are an existing user")
           loopCounter += 1;
         }
 
