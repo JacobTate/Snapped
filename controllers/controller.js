@@ -45,11 +45,14 @@ module.exports = app => {
   const upload = multer({
     storage
   });
-let userTag;
-app.post("/api/test/tag", (req, res) => {
- // console.log(req.body);
-  userTag = req.body.tag
-});
+
+  let userTag;
+
+  app.post("/api/test/tag", (req, res) => {
+  // console.log(req.body);
+    userTag = req.body.tag
+  });
+
   app.post("/upload", upload.single("file"), (req, res) => {
    console.log(userTag);
    db.LocationTags.findOneAndUpdate({
@@ -92,6 +95,7 @@ app.post("/api/test/tag", (req, res) => {
       });
 
   });
+  
   let userEmail;
 
   app.post("/api/myimages", (req, res) => {
@@ -102,7 +106,6 @@ app.post("/api/test/tag", (req, res) => {
     const userImages = [];
     const allImages = [];
     const userImagesArr = [];
-    //console.log("userEmail: " + userEmail);
     db.Users.find({
       email: userEmail
     }).then(data => {
@@ -112,21 +115,11 @@ app.post("/api/test/tag", (req, res) => {
       }
 
       gfs.find().toArray((err, files) => {
-
-        //console.log("images.length: " + allImages.length)
-        //console.log("files.length: " + files.length)
         for (let z = 0; z < userImages.length; z++) {
-          //console.log("z: " + z)
-          //console.log("userImages.length: " + userImages.length)
-          //console.log("userImages: " + userImages[z])
           for (let y = 0; y < files.length; y++) {
-            //console.log("Y: " + y)
-            //console.log("files._id: " + files[y]._id)
             if (files[y]._id == String(userImages[z])) {
-              //console.log("match found")
               userImagesArr.push(files[y])
             }
-            //console.log("userImagesArr: " + JSON.stringify(userImagesArr,null,2))
           }
         }
 
@@ -149,9 +142,6 @@ app.post("/api/test/tag", (req, res) => {
               new Date(a["uploadDate"]).getTime()
             );
           });
-
-        //console.log("f: " + JSON.stringify(f,null,2))
-
         res.json({
           files: f
         });
@@ -185,8 +175,6 @@ app.post("/api/test/tag", (req, res) => {
     });
 
   });
-
-  //TODO: START
 
   app.get("/mysnapps/api/showAll", (req, res) => {
     if (!gfs) {
@@ -233,7 +221,7 @@ app.post("/api/test/tag", (req, res) => {
       // return res.json(files);
     });
   });
-  //TODO: FINISH
+
    const LocationTagsArr = ["Inlet", "Rosemary", "Seacrest", "Alys", "WaterSound", "Seagrove", "Seaside", "WaterColor", "Grayton", "Blue Mountain", "Gulf Place", "Dune Allen"];
 //only creates tags if they do not exist
   db.LocationTags.find().then(data => {
@@ -246,6 +234,7 @@ app.post("/api/test/tag", (req, res) => {
       };
     }
   });
+  
   app.get("/api/find/locationTags", (req, res) => {
    let locationArr = [];
     db.LocationTags.find().then(data => {
@@ -256,5 +245,77 @@ app.post("/api/test/tag", (req, res) => {
     });
   });
 
+  app.post("/api/searchresults", (req, res) => {
+    searchTags = req.body.searchTags
+  });
+  //Get images based on Tags and redirect to SearchResults page
+  app.get("/api/show/searchresults", (req, res) => {
+    var isArr = Array.isArray(searchTags);
+    console.log("api/show/searchresults isArr: " + isArr)
+    console.log("array length: " + searchTags.length)
+    console.log("searchTags: " + JSON.stringify(searchTags))
+    console.log("1st value: " + searchTags[0].value)
+    
+    let filter = []
+    for (let n = 0; n < searchTags.length; n++) {
+      filter.push(searchTags[n].label)
+    }
+
+    let taggedImages = []
+    let taggedImagesArr = []
+
+    //  db.LocationTags.find({location: "Gulf Place"})
+    db.LocationTags.find({ location: { $in: filter } })
+    //db.LocationTags.find({ location: { $in: ['5bd45277f5b9430013f4a604', '5bd470fe452cb33af4b8407a'] } })
+    .then(data => {
+      for (let i=0; i < data.length; i++) {
+        for (let x=0; x < data[i].images.length; x++) {    
+            if (data[i].images[x]) {
+            taggedImages.push(data[i].images[x])
+            }
+        }
+        if (taggedImages) {
+          gfs.find().toArray((err, files) => {
+            for (let z = 0; z < taggedImages.length; z++) {
+              for (let y = 0; y < files.length; y++) {
+                if (files[y]._id == String(taggedImages[z])) {
+                  taggedImagesArr.push(files[y])
+                }
+              }
+            }
+    
+            const f = taggedImagesArr
+              .map(file => {
+                if (
+                  file.contentType === "image/png" ||
+                  file.contentType === "image/jpeg"
+                ) {
+                  file.isImage = true;
+                  file.filename = "image/" + file.filename;
+                } else {
+                  file.isImage = false;
+                }
+                return file;
+              })
+              .sort((a, b) => {
+                return (
+                  new Date(b["uploadDate"]).getTime() -
+                  new Date(a["uploadDate"]).getTime()
+                );
+              });
+            res.json({
+              files: f
+            });
+          });
+        }
+      }    
+      //res.json(taggedImages)
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      console.log("error fetching locationtags")
+      res.json(err);
+    });
+  })
 
 };

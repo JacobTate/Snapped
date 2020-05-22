@@ -1,18 +1,18 @@
     [{
         "id": 1,
-        "name": "Destin",
+        "name": "Inlet",
         "type": "location", 
         "clicked": false
     },
     {
         "id": 2,
-        "name": "Wake Boarding",
+        "name": "WaterSound",
         "type": "activity",
         "clicked": false
     },
     {
         "id": 3,
-        "name": "Kyaking",
+        "name": "Gulf Place",
         "type": "activity",
         "clicked": false
     },

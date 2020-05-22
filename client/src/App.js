@@ -9,9 +9,10 @@ import Footer from "./components/Footer";
 import Home from "./views/Home";
 import Profile from "./views/Profile";
 import Saved from "./views/Saved";
+import SearchResults from "./views/SearchResults";
 import MySnapps from "./views/MySnapps";
 import { useAuth0 } from "./react-auth0-spa";
-import history from "./utils/history";
+import history from "./utils/history"; 
 
 // styles
 import "./App.css";
@@ -37,6 +38,7 @@ const App = () => {
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/saved" component={Saved} />
             <PrivateRoute exact path="/mysnapps" component={MySnapps} />
+            <PrivateRoute exact path="/searchresults" component={SearchResults} />
           </Switch>
         </Container>
         <Footer />
