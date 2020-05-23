@@ -10,7 +10,7 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
+  //NavLink,
   Button,
   UncontrolledDropdown,
   DropdownToggle,
@@ -20,7 +20,7 @@ import {
 
 import { useAuth0 } from "../react-auth0-spa";
 
-import logo from "../assets/logo.svg";
+//import logo from "../assets/logo.svg";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,12 +41,12 @@ const NavBar = () => {
       returnTo: window.location.origin
     });
 
-  var icon = (
-    <span class="logo">
-      <a href="/">
-        <img src="../assets/Snapped_Logo.png" height="33" width="120" alt="text here" /></a>
-    </span>
-  );
+  // var icon = (
+  //   <span class="logo">
+  //     <a href="/">
+  //       <img src="../assets/Snapped_Logo.png" height="33" width="120" alt="text here" /></a>
+  //   </span>
+  // );
 
   return (
     <div className="nav-container">

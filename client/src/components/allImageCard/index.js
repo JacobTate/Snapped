@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-    Card, Button, CardImg, CardTitle, CardText, CardDeck,
-    CardSubtitle, CardBody
+    Card, Button, CardImg, CardDeck, CardBody
 } from 'reactstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

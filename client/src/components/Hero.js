@@ -1,25 +1,17 @@
 import React, { Component } from "react";
 import {Button} from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Select from 'react-select';
-import Tags from "./Tags/Tags";
-import clickTags from "../tags.json"
-import BuildSearchTags from "../utils/BuildSearchTags"
+//import Tags from "./Tags/Tags";
+//import clickTags from "../tags.json"
+//import BuildSearchTags from "../utils/BuildSearchTags"
 
-import {Link} from 'react-router-dom'; //TODO:
+//import {Link} from 'react-router-dom'; //TODO:
 import history from "../utils/history"; //TODO:
 import axios from "axios";
 
 const searchIcon = 'fa fa-search fa-2x m-0';
-const tagArray = [];
 
-clickTags.map(clickTags => {
-  tagArray.push({"label": clickTags.name, "value": clickTags.id})
-})
-
-//console.log("tagArray: " + JSON.stringify(tagArray))
-
-//const Hero = () => (
 class Hero extends Component {
 
   componentDidMount () {
@@ -64,21 +56,8 @@ class Hero extends Component {
                   location: {selectedOption}
                 })
               }
-
-              //href='/searchresults'
             >
             </Button>
-
-            {/* <Link to={{
-              pathname: "/searchresults",
-              state: {
-                location: {selectedOption}
-              }
-            }}>
-            New Submit
-            </Link> */}
-
-
           </div>
       </form>
     );

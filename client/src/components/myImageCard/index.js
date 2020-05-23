@@ -1,18 +1,18 @@
 import React, {useState} from 'react';
 import {
-    Card, Button, CardImg, CardTitle, CardText, CardDeck,
-    CardSubtitle, CardBody, Modal, ModalHeader, ModalBody, ModalFooter
+    Card, Button, CardImg, CardDeck,
+    CardBody, Modal, ModalHeader, ModalBody, ModalFooter
 } from 'reactstrap';
-import axios from "axios";
+//import axios from "axios";
 import ModalForm from "../../utils/ModalForm";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // styles
 import "./myImageCard.css";
-import TagSelect from "../../utils/AactivityTagsSelect";
+//import TagSelect from "../../utils/AactivityTagsSelect";
 
 const Example = (props) => {
     const {
-        buttonLabel,
+        //buttonLabel,
         className
       } = props;
     
