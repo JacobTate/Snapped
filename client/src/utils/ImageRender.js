@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Row, Col, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+//import { Row, Col, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Row, Col } from "reactstrap";
 import ImageCard from "../components/myImageCard";
 import axios from "axios";
 

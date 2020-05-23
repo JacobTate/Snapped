@@ -7,7 +7,8 @@ import ImageRender from "../utils/ImageRender";
 
 //class MySnapps extends Component {
 const MySnapps = function () {
-  const { loading, user } = useAuth0();
+  //const { loading, user } = useAuth0();
+  const { user } = useAuth0();
   //fileselected is a custom global variable 
   //setFileSelected is a custom functon to update the fileselected global variable
   //useState allows you to have a custom state object for data storage

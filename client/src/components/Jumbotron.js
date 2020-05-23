@@ -13,7 +13,7 @@ export default class Header extends Component {
     return (
       <div className="row">
         <div className="jumbotron">
-          <img src={jumbotron} width="100%" height="" />
+          <img src={jumbotron} width="100%" height="" alt="jumbotron"/>
         </div>
         <h3 className="tagline">Discover moments that you didn't know were Snapped. Free photos taken by a kind stranger with a camera. </h3>
       </div>
