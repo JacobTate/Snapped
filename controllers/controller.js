@@ -274,17 +274,62 @@ module.exports = app => {
   //db.ActivityTags.find().then(data => {
   //  if(data.length === 0 || !data){
 
+  for (let i = 0; i < activityTagsArr.length; i++) {
+    db.ActivityTags.create({
+      tag: activityTagsArr[i],
+      images: []
+    });
+  };
+  //}
+  //});
+  
+  app.get("/api/getTags", (req, res) => {
+    let activityArr = [];
+    db.ActivityTags.find().then(data => {
+      for (let j = 0; j < data.length; j++) {
+        activityArr.push(data[j].tag);
+      }
+      res.json(activityArr)
+    });
+  });
 
+  let activityTag;
+  app.post("/api/tags/addImage", (req, res) => {
+    console.log(req.body.tag);
+    activityTag = req.body.tag;
+  });
+
+  app.post("/api/imageId", (req, res) => {
+    db.ActivityTags.findOneAndUpdate({
+      tag: activityTag
+    }, {
+      $push: {
+        images: req.body.imageId
+      }
+    }, {
+      new: true
+    })
+      .then(function (dbLocationTags) {
+        //res.json(dbUsers);
+        res.redirect("/mysnapps");
+        activityTag = "";
+      })
+      .catch(function (err) {
+        res.json(err);
+      });
+  });
+
+  //Get searchTags
   app.post("/api/searchresults", (req, res) => {
     searchTags = req.body.searchTags
   });
   //Get images based on Tags and redirect to SearchResults page
   app.get("/api/show/searchresults", (req, res) => {
     var isArr = Array.isArray(searchTags);
-    console.log("api/show/searchresults isArr: " + isArr)
-    console.log("array length: " + searchTags.length)
-    console.log("searchTags: " + JSON.stringify(searchTags))
-    console.log("1st value: " + searchTags[0].value)
+    // console.log("api/show/searchresults isArr: " + isArr)
+    // console.log("array length: " + searchTags.length)
+    // console.log("searchTags: " + JSON.stringify(searchTags))
+    // console.log("1st value: " + searchTags[0].value)
     
     let filter = []
     for (let n = 0; n < searchTags.length; n++) {
@@ -294,9 +339,7 @@ module.exports = app => {
     let taggedImages = []
     let taggedImagesArr = []
 
-    //  db.LocationTags.find({location: "Gulf Place"})
     db.LocationTags.find({ location: { $in: filter } })
-    //db.LocationTags.find({ location: { $in: ['5bd45277f5b9430013f4a604', '5bd470fe452cb33af4b8407a'] } })
     .then(data => {
       for (let i=0; i < data.length; i++) {
         for (let x=0; x < data[i].images.length; x++) {    
@@ -347,48 +390,5 @@ module.exports = app => {
       res.json(err);
     });
   })
-
-
-  for (let i = 0; i < activityTagsArr.length; i++) {
-    db.ActivityTags.create({
-      tag: activityTagsArr[i],
-      images: []
-    });
-  };
-  //}
-  //});
-  app.get("/api/getTags", (req, res) => {
-    let activityArr = [];
-    db.ActivityTags.find().then(data => {
-      for (let j = 0; j < data.length; j++) {
-        activityArr.push(data[j].tag);
-      }
-      res.json(activityArr)
-    });
-  });
-  let activityTag;
-  app.post("/api/tags/addImage", (req, res) => {
-    console.log(req.body.tag);
-    activityTag = req.body.tag;
-  });
-  app.post("/api/imageId", (req, res) => {
-    db.ActivityTags.findOneAndUpdate({
-      tag: activityTag
-    }, {
-      $push: {
-        images: req.body.imageId
-      }
-    }, {
-      new: true
-    })
-      .then(function (dbLocationTags) {
-        //res.json(dbUsers);
-        res.redirect("/mysnapps");
-        activityTag = "";
-      })
-      .catch(function (err) {
-        res.json(err);
-      });
-  });
 
 };
