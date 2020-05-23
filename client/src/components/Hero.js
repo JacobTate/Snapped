@@ -4,9 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Select from 'react-select';
 import Tags from "./Tags/Tags";
 import clickTags from "../tags.json"
+import BuildSearchTags from "../utils/BuildSearchTags"
 
 import {Link} from 'react-router-dom'; //TODO:
 import history from "../utils/history"; //TODO:
+import axios from "axios";
 
 const searchIcon = 'fa fa-search fa-2x m-0';
 const tagArray = [];
@@ -19,6 +21,13 @@ clickTags.map(clickTags => {
 
 //const Hero = () => (
 class Hero extends Component {
+
+  componentDidMount () {
+    axios.get("/api/getAllTags").then(res => {
+        //console.log(res);
+        this.setState({allTagsArr: res.data});
+    });
+  };
 
   state = {
     selectedOption: null,
@@ -40,7 +49,8 @@ class Hero extends Component {
               isMulti
               value={selectedOption}
               onChange={this.handleChange}
-              options={tagArray}
+              // options={tagArray}
+              options={this.state.allTagsArr}
               />    
             </div>
     
