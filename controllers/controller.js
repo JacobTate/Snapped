@@ -270,18 +270,19 @@ module.exports = app => {
       res.json(locationArr)
     });
   });
+  
   const activityTagsArr = ["Beach", "Lake", "Gulf of Mexico", "Dog", "Cats", "Kayak", "Boat", "Bike", "Skate", "Swimming", "Paddle Boarding", "Kite Boarding", "Wake Boarding", "Skiing", "Walking", "Animal", "Golf Cart", "Car", "Sunset", "Sunrise", "Kids", "Couple", "Family", "Woman", "Man", "Turtle", "Dolphin", "Shark", "Fish", "Crab", "Shell", "Reef", "Scuba Diving", "Snorkling", "Surfing", "Body Board", "Food", "Drinks", "Exercise", "Reading", "Beach", "Games", "Airplane", "Parasailing"];
-  //db.ActivityTags.find().then(data => {
-  //  if(data.length === 0 || !data){
-
-  for (let i = 0; i < activityTagsArr.length; i++) {
-    db.ActivityTags.create({
-      tag: activityTagsArr[i],
-      images: []
-    });
-  };
-  //}
-  //});
+  
+  db.ActivityTags.find().then(data => {
+    if(data.length === 0 || !data){
+      for (let i = 0; i < activityTagsArr.length; i++) {
+        db.ActivityTags.create({
+          tag: activityTagsArr[i],
+          images: []
+        });
+      };
+    }
+  });
   
   app.get("/api/getTags", (req, res) => {
     let activityArr = [];
@@ -390,5 +391,48 @@ module.exports = app => {
       res.json(err);
     });
   })
+
+  app.get("/api/getAllTags", (req, res) => {
+    let allTagsArr = [];
+    
+    db.LocationTags.find().then(data => {
+      for (let j = 0; j < data.length; j++) {
+        //allTagsArr.push(data[j].location);
+        allTagsArr.push({"label": data[j].location, "value": data[j]._id, "type": "location"})
+      }
+      //res.json(allTagsArr)
+    // });
+
+      db.ActivityTags.find().then(data => {
+        for (let j = 0; j < data.length; j++) {
+          //allTagsArr.push(data[j].tag);
+          allTagsArr.push({"label": data[j].tag, "value": data[j]._id, "type": "activity"})
+        }
+        
+        allTagsArr.sort(fieldSorter(['label']));
+       
+        function fieldSorter(fields) {
+            return function (a, b) {
+                return fields
+                    .map(function (o) {
+                        var dir = 1;
+                        if (o[0] === '-') {
+                          dir = -1;
+                          o=o.substring(1);
+                        }
+                        if (a[o] > b[o]) return dir;
+                        if (a[o] < b[o]) return -(dir);
+                        return 0;
+                    })
+                    .reduce(function firstNonZeroValue (p,n) {
+                        return p ? p : n;
+                    }, 0);
+            };
+        }
+
+        res.json(allTagsArr)
+      });
+    });
+  });
 
 };
