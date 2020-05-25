@@ -281,11 +281,12 @@ module.exports = app => {
   });
 
   app.post("/api/imageId", (req, res) => {
+    const imageId = mongoose.Types.ObjectId(req.body.imageId)
     db.ActivityTags.findOneAndUpdate({
       tag: activityTag
     }, {
       $push: {
-        images: req.body.imageId
+        images: imageId
       }
     }, {
       new: true
@@ -632,7 +633,113 @@ module.exports = app => {
       
     }
   })
+  //delete from mysnapps page
+  app.post("/api/delete/", (req, res) => {
+    const fileId = req.body.fileId;
+    //delete the file from the database
+    gfs.delete(new mongoose.Types.ObjectId(fileId), (err, gridStore) => {
+      if (err) {
+        return res.status(404).json({
+          err: err
+        });
+      }
 
+      res.redirect('/mysnapps');
+    });
 
+//remove the image objectId from the users photos array 
+    db.Users.find().then(data => {
+      let userId = "";
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].photos.length > 0) {
+          for (let j = 0; j < data[i].photos.length; j++) {
+            if (String(data[i].photos[j]) == fileId) {
+              userId = data[i]._id;
+            };
+          };
+        };
+      };
+      let userObjId = mongoose.Types.ObjectId(userId);
+      let fileObjId = mongoose.Types.ObjectId(fileId);
+      db.Users.findOneAndUpdate({
+          _id: userObjId
+        }, {
+          $pull: {
+            photos: fileObjId
+          }
+        })
+        .then(function (dbArticles) {})
+        .catch(function (err) {
+          res.json(err);
+        });
+
+         db.Users.findOneAndUpdate({
+          _id: userObjId
+        }, {
+          $pull: {
+            saved_photos: fileObjId
+          }
+        })
+        .then(function (dbArticles) {})
+        .catch(function (err) {
+          res.json(err);
+        });
+    });
+
+//remove the image objectId from the location tags images array
+    db.LocationTags.find().then(data => {
+      let lTagId;
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].images.length > 0) {
+          for (let j = 0; j < data[i].images.length; j++) {
+            if (String(data[i].images[j]) == fileId) {
+              lTagId = data[i]._id;
+            };
+          };
+        };
+      };
+      let lTagObjId = mongoose.Types.ObjectId(lTagId);
+      let fileObjId = mongoose.Types.ObjectId(fileId);
+      return db.LocationTags.findOneAndUpdate({
+          _id: lTagObjId
+        }, {
+          $pull: {
+            images: fileObjId
+          }
+        })
+        .then(function (dbArticles) {})
+        .catch(function (err) {
+          res.json(err);
+        });
+    });
+
+    //remove the image objectId from the activity tags images array
+    db.ActivityTags.find().then(data => {
+      let aTagId;
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].images.length > 0) {
+          for (let j = 0; j < data[i].images.length; j++) {
+            if (String(data[i].images[j]) == fileId) {
+              aTagId = data[i]._id;
+            };
+          };
+        };
+
+      };
+      let aTagObjId = mongoose.Types.ObjectId(aTagId);
+      let fileObjId = mongoose.Types.ObjectId(fileId);
+      return db.ActivityTags.findOneAndUpdate({
+          _id: aTagObjId
+        }, {
+          $pull: {
+            images: fileObjId
+          }
+        })
+        .then(function (dbArticles) {})
+        .catch(function (err) {
+          res.json(err);
+        });
+    });
+  });
 
 };
