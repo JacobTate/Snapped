@@ -5,7 +5,7 @@ import { Container, Row, Col } from "reactstrap";
 import Loading from "../components/Loading";
 import { useAuth0 } from "../react-auth0-spa";
 
-import ImageRenderAll from "../utils/ImageRenderAll";
+import ImageRenderSaved from "../utils/ImageRenderSaved";
 
 const Saved = () => {
   const { loading, user } = useAuth0();
@@ -24,7 +24,7 @@ const Saved = () => {
         </Col>
       </Row>
 
-      <ImageRenderAll userEmail={user.email}/>  
+      <ImageRenderSaved userEmail={user.email}/>  
 
     </Container>
   );
