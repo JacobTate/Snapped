@@ -53,6 +53,7 @@ module.exports = app => {
 
   });
 
+  //Upload file
   app.post("/upload", upload.single("file"), (req, res) => {
     console.log(userTag);
     console.log("upload: " + req.file.id)
@@ -107,9 +108,12 @@ module.exports = app => {
     const userImages = [];
     const allImages = [];
     const userImagesArr = [];
+      //console.log("myImages userEmail: " + userEmail)
     db.Users.find({
       email: userEmail
     }).then(data => {
+      //console.log("myImages data: " + data) //FIXME: troubleshooting
+      //console.log("myImages photo.length: " + data[0].photos.length)
       for (let x = 0; x < data[0].photos.length; x++) {
         //console.log("user.photos: " + data[0].photos[x]);
         userImages.push(data[0].photos[x]);
@@ -296,97 +300,157 @@ module.exports = app => {
       });
   });
 
-  //Get searchTags
+  //Display search results
   app.post("/api/searchresults", (req, res) => {
     searchTags = req.body.searchTags
     userEmail = req.body.userEmail
   });
-  //Get images based on Tags and redirect to SearchResults page
+  
+  //Display search results
   app.get("/api/show/searchresults", (req, res) => {
-    if (searchTags) {
-      var isArr = Array.isArray(searchTags);
-      // console.log("api/show/searchresults isArr: " + isArr)
-      // console.log("array length: " + searchTags.length)
-      // console.log("searchTags: " + JSON.stringify(searchTags))
-      // console.log("1st value: " + searchTags[0].value)
-      
-      let filter = []
-      for (let n = 0; n < searchTags.length; n++) {
-        filter.push(searchTags[n].label)
-      }
+    
+    let userSavedImages = [];
+    
+    let filter = []
+    let taggedImages = []
+    let taggedImagesArr = []
 
-      let taggedImages = []
-      let taggedImagesArr = []
+    //Build filter array of tags chosen in search dropdown
+    for (let n = 0; n < searchTags.length; n++) {
+      filter.push(searchTags[n].label)
+    }
 
-      db.LocationTags.find({ location: { $in: filter } })
-      .then(data => {
-        for (let i=0; i < data.length; i++) {
-          for (let x=0; x < data[i].images.length; x++) {    
-              if (data[i].images[x]) {
-                
-                console.log("data[i]: " + data[i]) //TODO: 
-                //Is image already saved by this user?
-                console.log("userEmail: " + userEmail)
-                console.log("svPhoto: " + data[i]._id)
-                db.Users.find({email: userEmail, saved_photos: { $in: data[i].images } //})
-                //db.Users.find({
-                //  email: userEmail
-                }).then(svPhotos => {
-                  for (let z = 0; z < svPhotos[0].saved_photos.length; z++) {
-                    
-                    console.log("saved_photos: " + svPhotos[0].saved_photos[x]);
-                    //userImages.push(data[0].photos[x]);
-                  }              
-                })
-
-              taggedImages.push(data[i].images[x])
-              }
-          }
-          if (taggedImages) {
-            gfs.find().toArray((err, files) => {
-              for (let z = 0; z < taggedImages.length; z++) {
-                for (let y = 0; y < files.length; y++) {
-                  if (files[y]._id == String(taggedImages[z])) {
-                    taggedImagesArr.push(files[y])
-                  }
-                }
-              }
-      
-              const f = taggedImagesArr
-                .map(file => {
-                  if (
-                    file.contentType === "image/png" ||
-                    file.contentType === "image/jpeg"
-                  ) {
-                    file.isImage = true;
-                    file.filename = "image/" + file.filename;
-                  } else {
-                    file.isImage = false;
-                  }
-                  return file;
-                })
-                .sort((a, b) => {
-                  return (
-                    new Date(b["uploadDate"]).getTime() -
-                    new Date(a["uploadDate"]).getTime()
-                  );
-                });
-              res.json({
-                files: f
-              });
-            });
-          }
-        }    
-        //res.json(taggedImages)
+    Promise.resolve()
+      .then(() => getUserSavedImages())
+      .then(() => getLocationImages())
+      //.then(() => getActivityImages()) //FIXME: WORK IN PROGRESS
+      .then(() => getImages())
+      .then((resolve, reject) => { console.log( 'all done' ); })
+    
+    async function getUserSavedImages() {
+      //let taggedSavedImagesArr = [];
+      //console.log("resA: " + resA)
+      console.log('getting users saved photos')
+      //Get all images user has saved
+      await db.Users.find({ email: userEmail
+      }).then(svPhotos => {
+        if(svPhotos[0].saved_photos) {
+          userSavedImages.push(svPhotos[0].saved_photos)
+        } else { //user has not saved photos yet
+          console.log("no saved_photos for user")
+        }
+        console.log("saved_photos: " + userSavedImages)
       })
       .catch(function(err) {
         // If an error occurred, send it to the client
-        console.log("error fetching locationtags")
+        console.log("error fetching users saved photos")
         res.json(err);
       });
-    }  
-  })
+      
+      //userSavedImages = taggedSavedImagesArr
+      return 
+    };
 
+    async function getLocationImages() {
+          
+      console.log("userSavedImages: " + userSavedImages)
+      console.log('getting location data')
+
+      await db.LocationTags.find({ location: { $in: filter } })
+      .then(data => {
+        //console.log("data.length: " + data.length)
+        //console.log("data: " + data)
+        for (let i=0; i < data.length; i++) {
+          console.log("data.images.length: " + data[i].images.length)
+          for (let x=0; x < data[i].images.length; x++) {  
+            //taggedImages.push({"image": data[i].images[x], "mySavedImage": true})
+            taggedImages.push(data[i].images[x])
+            //console.log("taggedImages: " + data[i].images[x])
+          }  
+        }
+        console.log("final taggedImages: " + JSON.stringify(taggedImages))
+        return;
+      })
+      .catch(function(err) {
+        // If an error occurred, send it to the client
+        console.log("error fetching location photos")
+        res.json(err);
+      });
+    }    
+
+    async function getActivityImages() { //FIXME: WORK IN PROGRESS
+            
+      console.log("userSavedImages: " + userSavedImages)
+
+      console.log('getting activity data')
+      await db.ActivityTags.find({ tag: { $in: filter } })
+      .then(data => {
+        console.log("data.length: " + data.length)
+        console.log("data: " + data)
+        for (let i=0; i < data.length; i++) {
+          console.log("data.images.length: " + data[i].images.length)
+          for (let x=0; x < data[i].images.length; x++) {  
+            //taggedImages.push({"image": data[i].images[x], "mySavedImage": true})
+            taggedImages.push(data[i].images[x])
+            //console.log("taggedImages: " + data[i].images[x])
+          }  
+        }
+        console.log("final taggedImages: " + JSON.stringify(taggedImages))
+        return;
+      })
+      .catch(function(err) {
+        // If an error occurred, send it to the client
+        console.log("error fetching activity photos")
+        res.json(err);
+      });
+    }
+
+    async function getImages() {
+      console.log("getting images")
+      console.log("userSavedImages: " + userSavedImages)
+
+      if (taggedImages) {
+
+        await gfs.find().toArray((err, files) => {
+          for (let z = 0; z < taggedImages.length; z++) {
+            for (let y = 0; y < files.length; y++) {
+              if (files[y]._id == String(taggedImages[z])) {
+                taggedImagesArr.push(files[y])
+              }
+            }
+          }
+          console.log("here I am")
+          const f = taggedImagesArr
+            .map(file => {
+              if (
+                file.contentType === "image/png" ||
+                file.contentType === "image/jpeg"
+              ) {
+                file.isImage = true;
+                file.filename = "image/" + file.filename;
+              } else {
+                file.isImage = false;
+              }
+              return file;
+            })
+            .sort((a, b) => {
+              return (
+                new Date(b["uploadDate"]).getTime() -
+                new Date(a["uploadDate"]).getTime()
+              );
+            });
+          res.json({
+            files: f,
+            userSavedImages: userSavedImages
+
+          });
+        });
+      }
+      
+    }
+  });
+
+  //Get searchTags for Home page
   app.get("/api/getAllTags", (req, res) => {
     let allTagsArr = [];
     
@@ -430,31 +494,145 @@ module.exports = app => {
     });
   });
 
+  //Add (save) an image to the user's profile
   app.post("/save", (req, res) => {
-    console.log(req.body.imageIdArr)
-    console.log("req.file.id: " + req.body.id)
-    //console.log("imageId: " + req.body.imageId)
+    console.log("saving image")
+    console.log("save imageId: " + req.body.imageId)
     let fileObjId = mongoose.Types.ObjectId(req.body.imageId);
     //console.log("testID: " + testID)
     db.Users.findOneAndUpdate({
       email: req.body.userEmail
     }, {
       $push: {
-        //saved_photos: req.body.imageId
         saved_photos: fileObjId
       }
     }, {
       new: true
     })
     .then(function (dbUsers) {
-      //res.json(dbUsers);
-      //res.redirect("/searchresults");
-      res.render("/searchresults");
+      res.json(dbUsers);
     })
     .catch(function (err) {
       res.json(err);
     });
 
   });
+
+  //Remove (unsave) an image from the user's profile
+  app.post("/unsave", (req, res) => {
+    console.log("unsaving image")
+    console.log("unsave imageId: " + req.body.imageId)
+
+    let fileObjId = mongoose.Types.ObjectId(req.body.imageId);
+
+    db.Users.findOneAndUpdate({
+      email: req.body.userEmail
+    }, {
+      $pull: {
+        saved_photos: fileObjId
+      }
+    }, {
+      new: true
+    })
+    .then(function (dbUsers) {
+      res.json(dbUsers);
+    })
+    .catch(function (err) {
+      res.json(err);
+    });
+
+  });
+
+  //Get searchTags
+  app.post("/api/saved", (req, res) => {
+    userEmail = req.body.userEmail
+  });
+  
+  app.get("/api/show/saved", (req, res) => {
+    
+    let taggedImages = []
+    let taggedImagesArr = []
+
+    Promise.resolve()
+      .then(() => getUserSavedImages())
+      .then(() => getImages())
+      .then((resolve, reject) => { console.log( 'all done' ); })
+    
+    async function getUserSavedImages() {
+      //let taggedSavedImagesArr = [];
+      //console.log("resA: " + resA)
+      console.log('getting users saved photos')
+      //Get all images user has saved
+      await db.Users.find({ email: userEmail
+      }).then(svPhotos => {
+        if(svPhotos[0].saved_photos) {
+          for(let i = 0; i < svPhotos[0].saved_photos.length; i++) {
+            //userSavedImages.push(svPhotos[0].saved_photos)
+            taggedImages.push(svPhotos[0].saved_photos[i])
+          }
+        } else { //user has not saved photos yet
+          console.log("no saved_photos for user")
+        }
+        //console.log("saved_photos: " + taggedImages)
+      })
+      .catch(function(err) {
+        // If an error occurred, send it to the client
+        console.log("error fetching users saved photos")
+        res.json(err);
+      });
+      
+      //userSavedImages = taggedSavedImagesArr
+      return 
+    };
+
+    async function getImages() {
+      console.log("getting images")
+      //console.log("taggedImages: " + taggedImages)
+      //console.log("taggedImages.length: " + taggedImages.length)
+
+      if (taggedImages) {
+
+        await gfs.find().toArray((err, files) => {
+          for (let z = 0; z < taggedImages.length; z++) {
+            for (let y = 0; y < files.length; y++) {
+              if (files[y]._id == String(taggedImages[z])) {
+                taggedImagesArr.push(files[y])
+                //console.log("adding image to taggedImagesArr")
+              }
+            }
+          }
+          //console.log("here I am")
+          //console.log("taggedImagesArr: " + taggedImagesArr)
+          const f = taggedImagesArr
+            .map(file => {
+              if (
+                file.contentType === "image/png" ||
+                file.contentType === "image/jpeg"
+              ) {
+                file.isImage = true;
+                file.filename = "image/" + file.filename;
+              } else {
+                file.isImage = false;
+              }
+              return file;
+            })
+            .sort((a, b) => {
+              return (
+                new Date(b["uploadDate"]).getTime() -
+                new Date(a["uploadDate"]).getTime()
+              );
+            });
+          res.json({
+            files: f,
+            //userSavedImages: userSavedImages
+
+          });
+        });
+      }
+      
+    }
+  })
+
+
 
 };

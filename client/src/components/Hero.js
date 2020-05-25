@@ -1,13 +1,7 @@
 import React, { Component } from "react";
 import {Button} from 'reactstrap';
-//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Select from 'react-select';
-//import Tags from "./Tags/Tags";
-//import clickTags from "../tags.json"
-//import BuildSearchTags from "../utils/BuildSearchTags"
-
-//import {Link} from 'react-router-dom'; //TODO:
-import history from "../utils/history"; //TODO:
+import history from "../utils/history"; 
 import axios from "axios";
 
 const searchIcon = 'fa fa-search fa-2x m-0';
