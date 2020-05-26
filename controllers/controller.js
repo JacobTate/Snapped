@@ -251,7 +251,7 @@ module.exports = app => {
     });
   });
 
-  const activityTagsArr = ["Beach", "Lake", "Gulf of Mexico", "Dog", "Cats", "Kayak", "Boat", "Bike", "Skate", "Swimming", "Paddle Boarding", "Kite Boarding", "Wake Boarding", "Skiing", "Walking", "Animal", "Golf Cart", "Car", "Sunset", "Sunrise", "Kids", "Couple", "Family", "Woman", "Man", "Turtle", "Dolphin", "Shark", "Fish", "Crab", "Shell", "Reef", "Scuba Diving", "Snorkling", "Surfing", "Body Board", "Food", "Drinks", "Exercise", "Reading", "Beach", "Games", "Airplane", "Parasailing"];
+  const activityTagsArr = ["Beach", "Lake", "Gulf of Mexico", "Dog", "Cats", "Kayak", "Boat", "Bike", "Skate", "Swimming", "Paddle Boarding", "Kite Boarding", "Wake Boarding", "Skiing", "Walking", "Animal", "Golf Cart", "Car", "Sunset", "Sunrise", "Kids", "Couple", "Family", "Woman", "Man", "Turtle", "Dolphin", "Shark", "Fish", "Crab", "Shell", "Reef", "Scuba Diving", "Snorkling", "Surfing", "Body Board", "Food", "Drinks", "Exercise", "Reading",  "Games", "Airplane", "Parasailing"];
 
   db.ActivityTags.find().then(data => {
     if (data.length === 0 || !data) {
@@ -657,7 +657,7 @@ module.exports = app => {
   })
   //delete from mysnapps page
   app.post("/api/delete/", (req, res) => {
-    const fileId = req.body.fileId;
+    let fileId = req.body.fileId;
     //delete the file from the database
     gfs.delete(new mongoose.Types.ObjectId(fileId), (err, gridStore) => {
       if (err) {
@@ -764,7 +764,7 @@ module.exports = app => {
     });
   });
   app.get("/api/tags/:id", (req, res) => {
-    const fileId = req.params.id;
+    let fileId = req.params.id;
     db.ActivityTags.find().then(data => {
       const tagsArr = [];
       for (let i = 0; i < data.length; i++) {
@@ -781,33 +781,20 @@ module.exports = app => {
       };
     });
   });
-  app.delete("/api/tags/delete/:id", (req, res) => {
-    const fileId = req.params.id;
-    db.ActivityTags.find().then(data => {
-      let aTagId;
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].images.length > 0) {
-          for (let j = 0; j < data[i].images.length; j++) {
-            if (String(data[i].images[j]) == fileId) {
-              aTagId = data[i]._id;
-            };
-          };
-        };
-
-      };
-      let aTagObjId = mongoose.Types.ObjectId(aTagId);
-      let fileObjId = mongoose.Types.ObjectId(fileId);
-      return db.ActivityTags.findOneAndUpdate({
-          _id: aTagObjId
-        }, {
-          $pull: {
-            images: fileObjId
-          }
-        })
-        .then(function (dbArticles) {})
-        .catch(function (err) {
-          res.json(err);
-        });
+  app.delete("/api/tags/delete/:tag/:fileId", (req, res) => {
+    const tag = req.params.tag;
+    let fileId = req.params.fileId;
+    let fileObjId = mongoose.Types.ObjectId(fileId);
+    return db.ActivityTags.findOneAndUpdate({
+      tag: tag
+    }, {
+      $pull: {
+        images: fileObjId
+      }
+    })
+    .then(function (dbArticles) {})
+    .catch(function (err) {
+      res.json(err);
     });
   });
 };
