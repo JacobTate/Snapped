@@ -6,16 +6,28 @@ Snapped is photo sharing app that you use on vacation. Have you ever been on vac
 
 Check out the app on Heroku [here]()!
 
-
-
+## Creators
+  Michael Northcutt – Project Lead, Back-end Development
+  
+  Jessie Taylor – Snapped idea and Creative design, Front-end Development
+  
+  Jacob Tate -  Back-end development and Database Management
+  
+  Sauda Kabir – Front-end Styling, Database Management
+  
+  Lynde Capogreco – Front-end Development
 
 ## Technologies Used
+- React
 - Node
 - Express
-- Handlebars
 - MongoDB
 - Mongoose
-- Cheerio
+- AuthO
+- Multer
+- Crypto
 - Axios
+- Morgan
+- Path
 
 ![](client/public/assets/Snapped_Logo.png)
