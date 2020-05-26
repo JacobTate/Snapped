@@ -28,8 +28,8 @@ getTags = (imageId) => {
     });
     });
 };
-removeTag = (fileId) => {
-    axios.delete(`api/tags/delete/${fileId}`);
+removeTag = (tag, imageId) => {
+    axios.delete(`api/tags/delete/${tag}/${imageId}`);
     window.location.reload(false);
 };
 tagsRender = () => {
@@ -37,7 +37,7 @@ tagsRender = () => {
             <ul className="tagsDisplayList">{
                 this.state.tagsArr.map((tag, i) => (
                     <li className="tagsDisplayListItem" key={i}>
-                        {tag} <Button onClick={() => this.removeTag(this.props.thisImage)} color="white" className="m-0">x</Button>
+                        {tag} <Button onClick={() => this.removeTag(tag, this.props.thisImage)} color="white" className="m-0">x</Button>
                     </li> 
                     ))
              }</ul>
