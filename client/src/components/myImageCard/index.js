@@ -6,6 +6,7 @@ import {
 import axios from "axios";
 import ModalForm from "../../utils/ModalForm";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import ModalTagsDisplay from "../../utils/ModalTagsDisplay";
 // styles
 import "./myImageCard.css";
 //import TagSelect from "../../utils/AactivityTagsSelect";
@@ -20,6 +21,12 @@ const Example = (props) => {
     
       const toggle = () => {
           setModal(!modal);
+        //   if(!modal){
+        //       axios.get(`/api/tags/${props.thisImage}`)
+        //       .then(res => {
+        //        console.log(res);
+        //       });
+        //   };
     };
     const deleteBtn = (fileId) => {
         axios.post(`/api/delete/`,{
@@ -36,6 +43,7 @@ const Example = (props) => {
             <ModalForm imageId={props.thisImage}/>
         </ModalBody>
         <ModalFooter>
+          <ModalTagsDisplay thisImage={props.thisImage}/>
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
       </Modal>
