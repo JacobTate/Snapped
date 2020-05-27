@@ -46,49 +46,26 @@ module.exports = app => {
     storage
   });
 
-  //let userTag;
-
-  //app.post("/api/test/tag", (req, res) => {
-  // console.log(req.body);
-    //userTag = req.body.tag
-  //});
-
-  //app.post("/upload", upload.single("file"), (req, res) => {
-   //console.log(userTag);
-   //db.LocationTags.findOneAndUpdate({
-    //location: userTag
-  //}, {
-    //$push: {
-      //images: req.file.id
-    //}
-  //}, {
-    //new: true
-  //})
-  //.then(function (dbLocationTags) {
-    ////res.json(dbUsers);
-    //res.redirect("/mysnapps");
-    //userTag = "";
-  //})
-  //.catch(function (err) {
-    //res.json(err);
-
   let userTag;
   app.post("/api/test/tag", (req, res) => {
     // console.log(req.body);
     userTag = req.body.tag
 
   });
+
+  //Upload file
   app.post("/upload", upload.single("file"), (req, res) => {
     console.log(userTag);
+    console.log("upload: " + req.file.id)
     db.LocationTags.findOneAndUpdate({
-      location: userTag
-    }, {
-      $push: {
-        images: req.file.id
-      }
-    }, {
-      new: true
-    })
+        location: userTag
+      }, {
+        $push: {
+          images: req.file.id
+        }
+      }, {
+        new: true
+      })
       .then(function (dbLocationTags) {
         //res.json(dbUsers);
         res.redirect("/mysnapps");
@@ -103,14 +80,14 @@ module.exports = app => {
     //const fileId = req.file.id;
 
     db.Users.findOneAndUpdate({
-      email: req.body.userEmail
-    }, {
-      $push: {
-        photos: req.file.id
-      }
-    }, {
-      new: true
-    })
+        email: req.body.userEmail
+      }, {
+        $push: {
+          photos: req.file.id
+        }
+      }, {
+        new: true
+      })
       .then(function (dbUsers) {
         //res.json(dbUsers);
         res.redirect("/mysnapps");
@@ -120,7 +97,7 @@ module.exports = app => {
       });
 
   });
-  
+
   let userEmail;
 
   app.post("/api/myimages", (req, res) => {
@@ -131,9 +108,12 @@ module.exports = app => {
     const userImages = [];
     const allImages = [];
     const userImagesArr = [];
+    //console.log("myImages userEmail: " + userEmail)
     db.Users.find({
       email: userEmail
     }).then(data => {
+      //console.log("myImages data: " + data) //FIXME: troubleshooting
+      //console.log("myImages photo.length: " + data[0].photos.length)
       for (let x = 0; x < data[0].photos.length; x++) {
         //console.log("user.photos: " + data[0].photos[x]);
         userImages.push(data[0].photos[x]);
@@ -260,7 +240,7 @@ module.exports = app => {
       };
     }
   });
-  
+
   app.get("/api/find/locationTags", (req, res) => {
     let locationArr = [];
     db.LocationTags.find().then(data => {
@@ -270,11 +250,11 @@ module.exports = app => {
       res.json(locationArr)
     });
   });
-  
-  const activityTagsArr = ["Beach", "Lake", "Gulf of Mexico", "Dog", "Cats", "Kayak", "Boat", "Bike", "Skate", "Swimming", "Paddle Boarding", "Kite Boarding", "Wake Boarding", "Skiing", "Walking", "Animal", "Golf Cart", "Car", "Sunset", "Sunrise", "Kids", "Couple", "Family", "Woman", "Man", "Turtle", "Dolphin", "Shark", "Fish", "Crab", "Shell", "Reef", "Scuba Diving", "Snorkling", "Surfing", "Body Board", "Food", "Drinks", "Exercise", "Reading", "Beach", "Games", "Airplane", "Parasailing"];
-  
+
+  const activityTagsArr = ["Beach", "Lake", "Gulf of Mexico", "Dog", "Cats", "Kayak", "Boat", "Bike", "Skate", "Swimming", "Paddle Boarding", "Kite Boarding", "Wake Boarding", "Skiing", "Walking", "Animal", "Golf Cart", "Car", "Sunset", "Sunrise", "Kids", "Couple", "Family", "Woman", "Man", "Turtle", "Dolphin", "Shark", "Fish", "Crab", "Shell", "Reef", "Scuba Diving", "Snorkling", "Surfing", "Body Board", "Food", "Drinks", "Exercise", "Reading",  "Games", "Airplane", "Parasailing"];
+
   db.ActivityTags.find().then(data => {
-    if(data.length === 0 || !data){
+    if (data.length === 0 || !data) {
       for (let i = 0; i < activityTagsArr.length; i++) {
         db.ActivityTags.create({
           tag: activityTagsArr[i],
@@ -283,7 +263,7 @@ module.exports = app => {
       };
     }
   });
-  
+
   app.get("/api/getTags", (req, res) => {
     let activityArr = [];
     db.ActivityTags.find().then(data => {
@@ -301,15 +281,16 @@ module.exports = app => {
   });
 
   app.post("/api/imageId", (req, res) => {
+    const imageId = mongoose.Types.ObjectId(req.body.imageId)
     db.ActivityTags.findOneAndUpdate({
-      tag: activityTag
-    }, {
-      $push: {
-        images: req.body.imageId
-      }
-    }, {
-      new: true
-    })
+        tag: activityTag
+      }, {
+        $push: {
+          images: imageId
+        }
+      }, {
+        new: true
+      })
       .then(function (dbLocationTags) {
         //res.json(dbUsers);
         res.redirect("/mysnapps");
@@ -320,114 +301,212 @@ module.exports = app => {
       });
   });
 
-  //Get searchTags
+  //Display search results
   app.post("/api/searchresults", (req, res) => {
     searchTags = req.body.searchTags
+    userEmail = req.body.userEmail
   });
-  //Get images based on Tags and redirect to SearchResults page
+
+  //Display search results
   app.get("/api/show/searchresults", (req, res) => {
-    var isArr = Array.isArray(searchTags);
-    // console.log("api/show/searchresults isArr: " + isArr)
-    // console.log("array length: " + searchTags.length)
-    // console.log("searchTags: " + JSON.stringify(searchTags))
-    // console.log("1st value: " + searchTags[0].value)
-    
+
+    let userSavedImages = [];
+
     let filter = []
+    let taggedImages = []
+    let taggedImagesArr = []
+
+    //Build filter array of tags chosen in search dropdown
     for (let n = 0; n < searchTags.length; n++) {
       filter.push(searchTags[n].label)
     }
 
-    let taggedImages = []
-    let taggedImagesArr = []
+    Promise.resolve()
+      .then(() => getUserSavedImages())
+      .then(() => getLocationImages())
+      //.then(() => getActivityImages()) //FIXME: WORK IN PROGRESS
+      .then(() => getImages())
+      .then((resolve, reject) => {
+        console.log('all done');
+      })
 
-    db.LocationTags.find({ location: { $in: filter } })
-    .then(data => {
-      for (let i=0; i < data.length; i++) {
-        for (let x=0; x < data[i].images.length; x++) {    
-            if (data[i].images[x]) {
-            taggedImages.push(data[i].images[x])
+    async function getUserSavedImages() {
+      //let taggedSavedImagesArr = [];
+      //console.log("resA: " + resA)
+      console.log('getting users saved photos')
+      //Get all images user has saved
+      await db.Users.find({
+          email: userEmail
+        }).then(svPhotos => {
+          if (svPhotos[0].saved_photos) {
+            userSavedImages.push(svPhotos[0].saved_photos)
+          } else { //user has not saved photos yet
+            console.log("no saved_photos for user")
+          }
+          console.log("saved_photos: " + userSavedImages)
+        })
+        .catch(function (err) {
+          // If an error occurred, send it to the client
+          console.log("error fetching users saved photos")
+          res.json(err);
+        });
+
+      //userSavedImages = taggedSavedImagesArr
+      return
+    };
+
+    async function getLocationImages() {
+
+      console.log("userSavedImages: " + userSavedImages)
+      console.log('getting location data')
+
+      await db.LocationTags.find({
+          location: {
+            $in: filter
+          }
+        })
+        .then(data => {
+          //console.log("data.length: " + data.length)
+          //console.log("data: " + data)
+          for (let i = 0; i < data.length; i++) {
+            console.log("data.images.length: " + data[i].images.length)
+            for (let x = 0; x < data[i].images.length; x++) {
+              //taggedImages.push({"image": data[i].images[x], "mySavedImage": true})
+              taggedImages.push(data[i].images[x])
+              //console.log("taggedImages: " + data[i].images[x])
             }
-        }
-        if (taggedImages) {
-          gfs.find().toArray((err, files) => {
-            for (let z = 0; z < taggedImages.length; z++) {
-              for (let y = 0; y < files.length; y++) {
-                if (files[y]._id == String(taggedImages[z])) {
-                  taggedImagesArr.push(files[y])
-                }
+          }
+          console.log("final taggedImages: " + JSON.stringify(taggedImages))
+          return;
+        })
+        .catch(function (err) {
+          // If an error occurred, send it to the client
+          console.log("error fetching location photos")
+          res.json(err);
+        });
+    }
+
+    async function getActivityImages() { //FIXME: WORK IN PROGRESS
+
+      console.log("userSavedImages: " + userSavedImages)
+
+      console.log('getting activity data')
+      await db.ActivityTags.find({
+          tag: {
+            $in: filter
+          }
+        })
+        .then(data => {
+          console.log("data.length: " + data.length)
+          console.log("data: " + data)
+          for (let i = 0; i < data.length; i++) {
+            console.log("data.images.length: " + data[i].images.length)
+            for (let x = 0; x < data[i].images.length; x++) {
+              //taggedImages.push({"image": data[i].images[x], "mySavedImage": true})
+              taggedImages.push(data[i].images[x])
+              //console.log("taggedImages: " + data[i].images[x])
+            }
+          }
+          console.log("final taggedImages: " + JSON.stringify(taggedImages))
+          return;
+        })
+        .catch(function (err) {
+          // If an error occurred, send it to the client
+          console.log("error fetching activity photos")
+          res.json(err);
+        });
+    }
+
+    async function getImages() {
+      console.log("getting images")
+      console.log("userSavedImages: " + userSavedImages)
+
+      if (taggedImages) {
+
+        await gfs.find().toArray((err, files) => {
+          for (let z = 0; z < taggedImages.length; z++) {
+            for (let y = 0; y < files.length; y++) {
+              if (files[y]._id == String(taggedImages[z])) {
+                taggedImagesArr.push(files[y])
               }
             }
-    
-            const f = taggedImagesArr
-              .map(file => {
-                if (
-                  file.contentType === "image/png" ||
-                  file.contentType === "image/jpeg"
-                ) {
-                  file.isImage = true;
-                  file.filename = "image/" + file.filename;
-                } else {
-                  file.isImage = false;
-                }
-                return file;
-              })
-              .sort((a, b) => {
-                return (
-                  new Date(b["uploadDate"]).getTime() -
-                  new Date(a["uploadDate"]).getTime()
-                );
-              });
-            res.json({
-              files: f
+          }
+          console.log("here I am")
+          const f = taggedImagesArr
+            .map(file => {
+              if (
+                file.contentType === "image/png" ||
+                file.contentType === "image/jpeg"
+              ) {
+                file.isImage = true;
+                file.filename = "image/" + file.filename;
+              } else {
+                file.isImage = false;
+              }
+              return file;
+            })
+            .sort((a, b) => {
+              return (
+                new Date(b["uploadDate"]).getTime() -
+                new Date(a["uploadDate"]).getTime()
+              );
             });
-          });
-        }
-      }    
-      //res.json(taggedImages)
-    })
-    .catch(function(err) {
-      // If an error occurred, send it to the client
-      console.log("error fetching locationtags")
-      res.json(err);
-    });
-  })
+          res.json({
+            files: f,
+            userSavedImages: userSavedImages
 
+          });
+        });
+      }
+
+    }
+  });
+
+  //Get searchTags for Home page
   app.get("/api/getAllTags", (req, res) => {
     let allTagsArr = [];
-    
+
     db.LocationTags.find().then(data => {
       for (let j = 0; j < data.length; j++) {
         //allTagsArr.push(data[j].location);
-        allTagsArr.push({"label": data[j].location, "value": data[j]._id, "type": "location"})
+        allTagsArr.push({
+          "label": data[j].location,
+          "value": data[j]._id,
+          "type": "location"
+        })
       }
       //res.json(allTagsArr)
-    // });
+      // });
 
       db.ActivityTags.find().then(data => {
         for (let j = 0; j < data.length; j++) {
           //allTagsArr.push(data[j].tag);
-          allTagsArr.push({"label": data[j].tag, "value": data[j]._id, "type": "activity"})
+          allTagsArr.push({
+            "label": data[j].tag,
+            "value": data[j]._id,
+            "type": "activity"
+          })
         }
-        
+
         allTagsArr.sort(fieldSorter(['label']));
-       
+
         function fieldSorter(fields) {
-            return function (a, b) {
-                return fields
-                    .map(function (o) {
-                        var dir = 1;
-                        if (o[0] === '-') {
-                          dir = -1;
-                          o=o.substring(1);
-                        }
-                        if (a[o] > b[o]) return dir;
-                        if (a[o] < b[o]) return -(dir);
-                        return 0;
-                    })
-                    .reduce(function firstNonZeroValue (p,n) {
-                        return p ? p : n;
-                    }, 0);
-            };
+          return function (a, b) {
+            return fields
+              .map(function (o) {
+                var dir = 1;
+                if (o[0] === '-') {
+                  dir = -1;
+                  o = o.substring(1);
+                }
+                if (a[o] > b[o]) return dir;
+                if (a[o] < b[o]) return -(dir);
+                return 0;
+              })
+              .reduce(function firstNonZeroValue(p, n) {
+                return p ? p : n;
+              }, 0);
+          };
         }
 
         res.json(allTagsArr)
@@ -435,4 +514,287 @@ module.exports = app => {
     });
   });
 
+  //Add (save) an image to the user's profile
+  app.post("/save", (req, res) => {
+    console.log("saving image")
+    console.log("save imageId: " + req.body.imageId)
+    let fileObjId = mongoose.Types.ObjectId(req.body.imageId);
+    //console.log("testID: " + testID)
+    db.Users.findOneAndUpdate({
+        email: req.body.userEmail
+      }, {
+        $push: {
+          saved_photos: fileObjId
+        }
+      }, {
+        new: true
+      })
+      .then(function (dbUsers) {
+        res.json(dbUsers);
+      })
+      .catch(function (err) {
+        res.json(err);
+      });
+
+  });
+
+  //Remove (unsave) an image from the user's profile
+  app.post("/unsave", (req, res) => {
+    console.log("unsaving image")
+    console.log("unsave imageId: " + req.body.imageId)
+
+    let fileObjId = mongoose.Types.ObjectId(req.body.imageId);
+
+    db.Users.findOneAndUpdate({
+        email: req.body.userEmail
+      }, {
+        $pull: {
+          saved_photos: fileObjId
+        }
+      }, {
+        new: true
+      })
+      .then(function (dbUsers) {
+        res.json(dbUsers);
+      })
+      .catch(function (err) {
+        res.json(err);
+      });
+
+  });
+
+  //Get searchTags
+  app.post("/api/saved", (req, res) => {
+    userEmail = req.body.userEmail
+  });
+
+  app.get("/api/show/saved", (req, res) => {
+
+    let taggedImages = []
+    let taggedImagesArr = []
+
+    Promise.resolve()
+      .then(() => getUserSavedImages())
+      .then(() => getImages())
+      .then((resolve, reject) => {
+        console.log('all done');
+      })
+
+    async function getUserSavedImages() {
+      //let taggedSavedImagesArr = [];
+      //console.log("resA: " + resA)
+      console.log('getting users saved photos')
+      //Get all images user has saved
+      await db.Users.find({
+          email: userEmail
+        }).then(svPhotos => {
+          if (svPhotos[0].saved_photos) {
+            for (let i = 0; i < svPhotos[0].saved_photos.length; i++) {
+              //userSavedImages.push(svPhotos[0].saved_photos)
+              taggedImages.push(svPhotos[0].saved_photos[i])
+            }
+          } else { //user has not saved photos yet
+            console.log("no saved_photos for user")
+          }
+          //console.log("saved_photos: " + taggedImages)
+        })
+        .catch(function (err) {
+          // If an error occurred, send it to the client
+          console.log("error fetching users saved photos")
+          res.json(err);
+        });
+
+      //userSavedImages = taggedSavedImagesArr
+      return
+    };
+
+    async function getImages() {
+      console.log("getting images")
+      //console.log("taggedImages: " + taggedImages)
+      //console.log("taggedImages.length: " + taggedImages.length)
+
+      if (taggedImages) {
+
+        await gfs.find().toArray((err, files) => {
+          for (let z = 0; z < taggedImages.length; z++) {
+            for (let y = 0; y < files.length; y++) {
+              if (files[y]._id == String(taggedImages[z])) {
+                taggedImagesArr.push(files[y])
+                //console.log("adding image to taggedImagesArr")
+              }
+            }
+          }
+          //console.log("here I am")
+          //console.log("taggedImagesArr: " + taggedImagesArr)
+          const f = taggedImagesArr
+            .map(file => {
+              if (
+                file.contentType === "image/png" ||
+                file.contentType === "image/jpeg"
+              ) {
+                file.isImage = true;
+                file.filename = "image/" + file.filename;
+              } else {
+                file.isImage = false;
+              }
+              return file;
+            })
+            .sort((a, b) => {
+              return (
+                new Date(b["uploadDate"]).getTime() -
+                new Date(a["uploadDate"]).getTime()
+              );
+            });
+          res.json({
+            files: f,
+            //userSavedImages: userSavedImages
+
+          });
+        });
+      }
+
+    }
+  })
+  //delete from mysnapps page
+  app.post("/api/delete/", (req, res) => {
+    let fileId = req.body.fileId;
+    //delete the file from the database
+    gfs.delete(new mongoose.Types.ObjectId(fileId), (err, gridStore) => {
+      if (err) {
+        return res.status(404).json({
+          err: err
+        });
+      }
+
+      res.redirect('/mysnapps');
+    });
+
+    //remove the image objectId from the users photos array 
+    db.Users.find().then(data => {
+      let userId = "";
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].photos.length > 0) {
+          for (let j = 0; j < data[i].photos.length; j++) {
+            if (String(data[i].photos[j]) == fileId) {
+              userId = data[i]._id;
+            };
+          };
+        };
+      };
+      let userObjId = mongoose.Types.ObjectId(userId);
+      let fileObjId = mongoose.Types.ObjectId(fileId);
+      db.Users.findOneAndUpdate({
+          _id: userObjId
+        }, {
+          $pull: {
+            photos: fileObjId
+          }
+        })
+        .then(function (dbArticles) {})
+        .catch(function (err) {
+          res.json(err);
+        });
+
+      db.Users.findOneAndUpdate({
+          _id: userObjId
+        }, {
+          $pull: {
+            saved_photos: fileObjId
+          }
+        })
+        .then(function (dbArticles) {})
+        .catch(function (err) {
+          res.json(err);
+        });
+    });
+
+    //remove the image objectId from the location tags images array
+    db.LocationTags.find().then(data => {
+      let lTagId;
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].images.length > 0) {
+          for (let j = 0; j < data[i].images.length; j++) {
+            if (String(data[i].images[j]) == fileId) {
+              lTagId = data[i]._id;
+            };
+          };
+        };
+      };
+      let lTagObjId = mongoose.Types.ObjectId(lTagId);
+      let fileObjId = mongoose.Types.ObjectId(fileId);
+      return db.LocationTags.findOneAndUpdate({
+          _id: lTagObjId
+        }, {
+          $pull: {
+            images: fileObjId
+          }
+        })
+        .then(function (dbArticles) {})
+        .catch(function (err) {
+          res.json(err);
+        });
+    });
+
+    //remove the image objectId from the activity tags images array
+    db.ActivityTags.find().then(data => {
+      let aTagId;
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].images.length > 0) {
+          for (let j = 0; j < data[i].images.length; j++) {
+            if (String(data[i].images[j]) == fileId) {
+              aTagId = data[i]._id;
+            };
+          };
+        };
+
+      };
+      let aTagObjId = mongoose.Types.ObjectId(aTagId);
+      let fileObjId = mongoose.Types.ObjectId(fileId);
+      return db.ActivityTags.findOneAndUpdate({
+          _id: aTagObjId
+        }, {
+          $pull: {
+            images: fileObjId
+          }
+        })
+        .then(function (dbArticles) {})
+        .catch(function (err) {
+          res.json(err);
+        });
+    });
+  });
+  app.get("/api/tags/:id", (req, res) => {
+    let fileId = req.params.id;
+    db.ActivityTags.find().then(data => {
+      const tagsArr = [];
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].images.length > 0) {
+          for (let j = 0; j < data[i].images.length; j++) {
+            if (String(data[i].images[j]) == fileId) {
+              tagsArr.push(data[i].tag);
+            };
+          };
+        };
+      };
+      if (tagsArr.length > 0) {
+        res.json(tagsArr);
+      };
+    });
+  });
+  app.delete("/api/tags/delete/:tag/:fileId", (req, res) => {
+    const tag = req.params.tag;
+    let fileId = req.params.fileId;
+    let fileObjId = mongoose.Types.ObjectId(fileId);
+    return db.ActivityTags.findOneAndUpdate({
+      tag: tag
+    }, {
+      $pull: {
+        images: fileObjId
+      }
+    })
+    .then(function (dbArticles) {})
+    .catch(function (err) {
+      res.json(err);
+    });
+  });
 };

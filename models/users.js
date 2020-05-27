@@ -12,7 +12,8 @@ var UsersSchema = new Schema({
     type: String,
     required: true
   },
-  photos: []
+  photos: [],
+  saved_photos: []
   // photos: {
   //   type: Array,
   // }
