@@ -346,6 +346,7 @@ module.exports = app => {
 
     let filter = []
     let taggedImages = []
+    let taggedActivityImages = []
     let taggedImagesArr = []
 
     //Build filter array of tags chosen in search dropdown
@@ -356,7 +357,7 @@ module.exports = app => {
     Promise.resolve()
       .then(() => getUserSavedImages())
       .then(() => getLocationImages())
-      //.then(() => getActivityImages()) //FIXME: WORK IN PROGRESS
+      .then(() => getActivityImages()) //FIXME: WORK IN PROGRESS
       .then(() => getImages())
       .then((resolve, reject) => {
         console.log('all done');
@@ -391,6 +392,8 @@ module.exports = app => {
 
       console.log("userSavedImages: " + userSavedImages)
       console.log('getting location data')
+      
+      let filterOnlyActivityTags = false;
 
       await db.LocationTags.find({
           location: {
@@ -486,7 +489,6 @@ module.exports = app => {
           res.json({
             files: f,
             userSavedImages: userSavedImages
-
           });
         });
       }
@@ -802,6 +804,7 @@ module.exports = app => {
 
     });
   });
+
   app.get("/api/tags/:id", (req, res) => {
     let fileId = req.params.id;
     db.ActivityTags.find().then(data => {
@@ -839,6 +842,7 @@ module.exports = app => {
 
 
   });
+  
   app.delete("/api/tags/delete/:tag/:fileId", (req, res) => {
     const tag = req.params.tag;
     let fileId = req.params.fileId;
