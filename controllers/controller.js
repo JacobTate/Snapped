@@ -48,42 +48,42 @@ module.exports = app => {
 
   let userTag;
   app.post("/api/test/tag", (req, res) => {
-  //   console.log(req.body);
+    //   console.log(req.body);
     userTag = req.body.tag
 
   });
-app.post("/api/tags/changeLocation", (req, res) => {
-  console.log(req.body);
-  console.log(userTag);
-  db.LocationTags.findOneAndUpdate({
-    location: req.body.currentLocation
-  }, {
-    $pull: {
-      images: mongoose.Types.ObjectId(req.body.fileId)
-    }
-  })
-  .then(function (dbArticles) {})
-  .catch(function (err) {
-    res.json(err);
-  }); 
-  db.LocationTags.findOneAndUpdate({
-    location: userTag
-  }, {
-    $push: {
-      images: mongoose.Types.ObjectId(req.body.fileId) 
-    }
-  }, {
-    new: true
-  })
-  .then(function (dbLocationTags) {
-    //res.json(dbUsers);
-    res.redirect("/mysnapps");
-    userTag = "";
-  })
-  .catch(function (err) {
-    res.json(err);
+  app.post("/api/tags/changeLocation", (req, res) => {
+    console.log(req.body);
+    console.log(userTag);
+    db.LocationTags.findOneAndUpdate({
+        location: req.body.currentLocation
+      }, {
+        $pull: {
+          images: mongoose.Types.ObjectId(req.body.fileId)
+        }
+      })
+      .then(function (dbArticles) {})
+      .catch(function (err) {
+        res.json(err);
+      });
+    db.LocationTags.findOneAndUpdate({
+        location: userTag
+      }, {
+        $push: {
+          images: mongoose.Types.ObjectId(req.body.fileId)
+        }
+      }, {
+        new: true
+      })
+      .then(function (dbLocationTags) {
+        //res.json(dbUsers);
+        res.redirect("/mysnapps");
+        userTag = "";
+      })
+      .catch(function (err) {
+        res.json(err);
+      });
   });
-});
 
   //Upload file
   app.post("/upload", upload.single("file"), (req, res) => {
@@ -263,14 +263,14 @@ app.post("/api/tags/changeLocation", (req, res) => {
   //only creates tags if they do not exist
 
   db.LocationTags.find().then(data => {
-     if (data.length === 0 || !data) {
+    if (data.length === 0 || !data) {
       for (let i = 0; i < LocationTagsArr.length; i++) {
         db.LocationTags.create({
           location: LocationTagsArr[i],
           images: []
         });
       };
-     };
+    };
   });
 
   app.get("/api/find/locationTags", (req, res) => {
@@ -755,18 +755,18 @@ app.post("/api/tags/changeLocation", (req, res) => {
       let fileObjId = mongoose.Types.ObjectId(fileId);
       for (let i = 0; i < lTagId.length; i++) {
         db.LocationTags.findOneAndUpdate({
-          _id: mongoose.Types.ObjectId(lTagId[i])
-        }, {
-          $pull: {
-            images: fileObjId
-          }
-        })
-        .then(function (dbArticles) {})
-        .catch(function (err) {
-          res.json(err);
-        }); 
+            _id: mongoose.Types.ObjectId(lTagId[i])
+          }, {
+            $pull: {
+              images: fileObjId
+            }
+          })
+          .then(function (dbArticles) {})
+          .catch(function (err) {
+            res.json(err);
+          });
       }
-   
+
     });
 
     //remove the image objectId from the activity tags images array
@@ -776,30 +776,30 @@ app.post("/api/tags/changeLocation", (req, res) => {
       for (let i = 0; i < data.length; i++) {
         if (data[i].images.length > 0) {
           for (let j = 0; j < data[i].images.length; j++) {
-          if(String(data[i].images[j]).includes(fileId)){
-         //   console.log(data[i]._id);
-            aTagId.push(data[i]._id)
+            if (String(data[i].images[j]).includes(fileId)) {
+              //   console.log(data[i]._id);
+              aTagId.push(data[i]._id)
+            };
           };
         };
-        };
-      
+
       };
       let fileObjId = mongoose.Types.ObjectId(fileId);
       for (let i = 0; i < aTagId.length; i++) {
-    console.log(aTagId[i]);
-     db.ActivityTags.findOneAndUpdate({
-      _id: mongoose.Types.ObjectId(aTagId[i])
-    }, {
-      $pull: {
-        images: fileObjId
-      }
-    })
-    .then(function (dbArticles) {})
-    .catch(function (err) {
-      res.json(err);
-    });
+        console.log(aTagId[i]);
+        db.ActivityTags.findOneAndUpdate({
+            _id: mongoose.Types.ObjectId(aTagId[i])
+          }, {
+            $pull: {
+              images: fileObjId
+            }
+          })
+          .then(function (dbArticles) {})
+          .catch(function (err) {
+            res.json(err);
+          });
       };
-  
+
     });
   });
   app.get("/api/tags/:id", (req, res) => {
@@ -832,12 +832,12 @@ app.post("/api/tags/changeLocation", (req, res) => {
           lTags: lTags
         };
         console.log(tagsObj);
-        
+
         res.json(tagsObj);
       });
     });
- 
-   
+
+
   });
   app.delete("/api/tags/delete/:tag/:fileId", (req, res) => {
     const tag = req.params.tag;
