@@ -21,12 +21,6 @@ const Example = (props) => {
     
       const toggle = () => {
           setModal(!modal);
-        //   if(!modal){
-        //       axios.get(`/api/tags/${props.thisImage}`)
-        //       .then(res => {
-        //        console.log(res);
-        //       });
-        //   };
     };
     const deleteBtn = (fileId) => {
         axios.post(`/api/delete/`,{
@@ -43,7 +37,7 @@ const Example = (props) => {
             <ModalForm imageId={props.thisImage}/>
         </ModalBody>
         <ModalFooter>
-          <ModalTagsDisplay thisImage={props.thisImage}/>
+          <ModalTagsDisplay thisImage={props.thisImage} showDeleteButton={true}/>
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
       </Modal>
