@@ -23,7 +23,7 @@ const MySnapps = function () {
   return (
     <Container>
       <form action="/upload" method="POST" encType="multipart/form-data">
-      <TagSelect />
+      <TagSelect defaultText={"Select a location"}/>
         <p className="lead text-muted">{user.email}</p>
         <input type="hidden" name="userEmail" value={user.email}
           useRef={user.email} />
