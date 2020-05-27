@@ -40,10 +40,15 @@ getTags = (imageId) => {
 };
 removeTag = (tag, imageId) => {
     axios.delete(`api/tags/delete/${tag}/${imageId}`);
-    window.location.reload(false);
+};
+updateTags = event => {
+ const tagName = [event.target.value];
+    const tagFilter = this.state.aTagsArr.filter(item => !tagName.includes(item));
+    this.setState({aTagsArr: tagFilter});
+    
 };
 deleteBtn = (tag) => {
-   return <Button onClick={() => this.removeTag(tag, this.props.thisImage)} color="white" id="deleteTagBtn" className="m-0">x</Button>
+   return <Button value={tag} onClick={(event) => {this.updateTags(event); this.removeTag(tag, this.props.thisImage)}} color="white" id="deleteTagBtn" className="m-0">x</Button>
 
 };
 handleSubmit =  () => {
@@ -85,7 +90,7 @@ render(){
     <div>
         <div className="modalLocationTagsDisplay">
         Location: {this.state.lTags}
-        {this.locationTagsChange()}
+        {this.props.showDeleteButton ? this.locationTagsChange(): null}
         </div>
         <hr></hr>
         <div>
