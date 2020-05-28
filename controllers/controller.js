@@ -4,7 +4,7 @@ const multer = require("multer");
 const gridFsStorage = require("multer-gridfs-storage");
 const grid = require("gridfs-stream");
 const crypto = require("crypto");
-const mongoURI = "mongodb://localhost/snapped";
+const mongoURI = "mongodb://heroku_ksl76mn8:68e214gepr39dveppos86i1u1o@ds041939.mlab.com:41939/heroku_ksl76mn8";
 const conn = mongoose.createConnection(mongoURI);
 mongoose.connect(mongoURI, {
   useNewUrlParser: true
@@ -263,7 +263,7 @@ module.exports = app => {
   //only creates tags if they do not exist
 
   db.LocationTags.find().then(data => {
-    if (data.length === 0 || !data) {
+  if (data.length === 0 || !data) {
       for (let i = 0; i < LocationTagsArr.length; i++) {
         db.LocationTags.create({
           location: LocationTagsArr[i],
@@ -286,7 +286,7 @@ module.exports = app => {
   const activityTagsArr = ["Beach", "Lake", "Gulf of Mexico", "Dog", "Cats", "Kayak", "Boat", "Bike", "Skate", "Swimming", "Paddle Boarding", "Kite Boarding", "Wake Boarding", "Skiing", "Walking", "Animal", "Golf Cart", "Car", "Sunset", "Sunrise", "Kids", "Couple", "Family", "Woman", "Man", "Turtle", "Dolphin", "Shark", "Fish", "Crab", "Shell", "Reef", "Scuba Diving", "Snorkling", "Surfing", "Body Board", "Food", "Drinks", "Exercise", "Reading", "Games", "Airplane", "Parasailing"];
 
   db.ActivityTags.find().then(data => {
-    if (data.length === 0 || !data) {
+  if (data.length === 0 || !data) {
       for (let i = 0; i < activityTagsArr.length; i++) {
         db.ActivityTags.create({
           tag: activityTagsArr[i],
