@@ -13,9 +13,9 @@ const Home = () => (
     <Hero />
 
     <hr />
-    
-          <Carousel />
-         
+
+     <Carousel />
+
 
   </Fragment>
 );
