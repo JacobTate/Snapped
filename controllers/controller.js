@@ -313,7 +313,7 @@ module.exports = app => {
   });
 
   app.post("/api/imageId", (req, res) => {
-    const imageId = mongoose.Types.ObjectId(req.body.imageId)
+    const imageId = mongoose.Types.ObjectId(req.body.imageId);
     db.ActivityTags.findOneAndUpdate({
         tag: activityTag
       }, {
@@ -323,9 +323,9 @@ module.exports = app => {
       }, {
         new: true
       })
-      .then(function (dbLocationTags) {
-        //res.json(dbUsers);
-        res.redirect("/mysnapps");
+      .then(function (dbActivityTags) {
+        res.json(dbActivityTags);
+       // res.redirect("/mysnapps");
         activityTag = "";
       })
       .catch(function (err) {

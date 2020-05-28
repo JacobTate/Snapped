@@ -9,7 +9,8 @@ tag: {
   unique: true
 },
 images: {
-  type: Array
+  type: Array,
+  unique: true
 }
 });
 

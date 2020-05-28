@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import axios from "axios";
 import {Button} from "reactstrap";
 import TagSelect from "./TagSelect";
+import ModalForm from "./ModalForm";
 class ModalTagsDisplay extends Component {
 constructor(props){
     super(props);
@@ -51,19 +52,18 @@ deleteBtn = (tag) => {
    return <Button value={tag} onClick={(event) => {this.updateTags(event); this.removeTag(tag, this.props.thisImage)}} color="white" id="deleteTagBtn" className="m-0">x</Button>
 
 };
-handleSubmit =  () => {
+handleSubmit = () => {
 axios.post("/api/tags/changeLocation", {
 fileId: this.props.thisImage,
 currentLocation: this.state.lTags
 });
-window.location.reload(false);
 };
 locationTagsChange = () => {
     return(
   <div>
       <form>
-      <TagSelect  defaultText={"Change"}/>
-  <Button onClick={this.handleSubmit} color="primary">Submit</Button>
+      <TagSelect defaultText={"Change"}/>
+  <Button onClick={() => {this.handleSubmit(); this.getTags(this.props.thisImage)}} color="primary">Submit</Button>
   </form>
   </div>
     );
@@ -85,9 +85,16 @@ tagsRender = () => {
              }</ul>
      );    
 };
+showModalFrom = () => {
+    return(
+        <ModalForm getTags={this.getTags.bind(this)} imageId={this.props.thisImage}/>
+
+    );
+};
 render(){
     return(
     <div>
+        {this.props.showDeleteButton ? this.showModalFrom(): null}
         <div className="modalLocationTagsDisplay">
         Location: {this.state.lTags}
         {this.props.showDeleteButton ? this.locationTagsChange(): null}
