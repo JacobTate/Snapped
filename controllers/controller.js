@@ -357,7 +357,7 @@ module.exports = app => {
     Promise.resolve()
       .then(() => getUserSavedImages())
       .then(() => getLocationImages())
-      .then(() => getActivityImages()) //FIXME: WORK IN PROGRESS
+      .then(() => getActivityImages())
       .then(() => getImages())
       .then((resolve, reject) => {
         console.log('all done');
@@ -488,7 +488,7 @@ module.exports = app => {
             });
           res.json({
             files: f,
-            userSavedImages: userSavedImages
+            userSavedImages: userSavedImages,
           });
         });
       }

@@ -6,8 +6,20 @@ import ImageRenderSearch from "../utils/ImageRenderSearch";
 
 const SearchResults = ({history, location}) => {
 
+  let dspSearchTags = "Search Criteria: "
   let searchTags= location.state.location.selectedOption  
- 
+     
+  //Add search criteria to Search Results page
+  for(let i = 0; i < searchTags.length; i ++) {
+    
+    dspSearchTags += searchTags[i].label
+    
+    if(i < (searchTags.length - 1)) {
+      dspSearchTags += ", "
+    }
+    //console.log("dspSearchTags: " + dspSearchTags)
+  }
+
   const { loading, user } = useAuth0();
 
   if (loading || !user) {
@@ -20,6 +32,7 @@ const SearchResults = ({history, location}) => {
         <Col md>
           <h2>Search Results</h2>
           <p className="lead text-muted">{user.email}</p>
+          <p className="lead text-muted">{dspSearchTags}</p>
         </Col>
       </Row>
 
