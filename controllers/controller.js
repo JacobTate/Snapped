@@ -270,7 +270,7 @@ module.exports = app => {
           images: []
         });
       };
-    };
+   };
   });
 
   app.get("/api/find/locationTags", (req, res) => {
@@ -286,7 +286,7 @@ module.exports = app => {
   const activityTagsArr = ["Beach", "Lake", "Gulf of Mexico", "Dog", "Cats", "Kayak", "Boat", "Bike", "Skate", "Swimming", "Paddle Boarding", "Kite Boarding", "Wake Boarding", "Skiing", "Walking", "Animal", "Golf Cart", "Car", "Sunset", "Sunrise", "Kids", "Couple", "Family", "Woman", "Man", "Turtle", "Dolphin", "Shark", "Fish", "Crab", "Shell", "Reef", "Scuba Diving", "Snorkling", "Surfing", "Body Board", "Food", "Drinks", "Exercise", "Reading", "Games", "Airplane", "Parasailing"];
 
   db.ActivityTags.find().then(data => {
-  if (data.length === 0 || !data) {
+if (data.length === 0 || !data) {
       for (let i = 0; i < activityTagsArr.length; i++) {
         db.ActivityTags.create({
           tag: activityTagsArr[i],
