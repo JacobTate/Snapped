@@ -376,7 +376,7 @@ module.exports = app => {
           } else { //user has not saved photos yet
             console.log("no saved_photos for user")
           }
-          console.log("saved_photos: " + userSavedImages)
+          //console.log("saved_photos: " + userSavedImages)
         })
         .catch(function (err) {
           // If an error occurred, send it to the client
@@ -390,7 +390,7 @@ module.exports = app => {
 
     async function getLocationImages() {
 
-      console.log("userSavedImages: " + userSavedImages)
+      //console.log("userSavedImages: " + userSavedImages)
       console.log('getting location data')
       
       let filterOnlyActivityTags = false;
@@ -404,14 +404,14 @@ module.exports = app => {
           //console.log("data.length: " + data.length)
           //console.log("data: " + data)
           for (let i = 0; i < data.length; i++) {
-            console.log("data.images.length: " + data[i].images.length)
+            //console.log("data.images.length: " + data[i].images.length)
             for (let x = 0; x < data[i].images.length; x++) {
               //taggedImages.push({"image": data[i].images[x], "mySavedImage": true})
               taggedImages.push(data[i].images[x])
               //console.log("taggedImages: " + data[i].images[x])
             }
           }
-          console.log("final taggedImages: " + JSON.stringify(taggedImages))
+          //console.log("final taggedImages: " + JSON.stringify(taggedImages))
           return;
         })
         .catch(function (err) {
@@ -421,9 +421,9 @@ module.exports = app => {
         });
     }
 
-    async function getActivityImages() { //FIXME: WORK IN PROGRESS
+    async function getActivityImages() {
 
-      console.log("userSavedImages: " + userSavedImages)
+      //console.log("userSavedImages: " + userSavedImages)
 
       console.log('getting activity data')
       await db.ActivityTags.find({
@@ -432,17 +432,23 @@ module.exports = app => {
           }
         })
         .then(data => {
-          console.log("data.length: " + data.length)
-          console.log("data: " + data)
+          //console.log("data.length: " + data.length)
+          //console.log("data: " + data)
           for (let i = 0; i < data.length; i++) {
-            console.log("data.images.length: " + data[i].images.length)
+            //console.log("data.images.length: " + data[i].images.length)
             for (let x = 0; x < data[i].images.length; x++) {
               //taggedImages.push({"image": data[i].images[x], "mySavedImage": true})
-              taggedImages.push(data[i].images[x])
+              
+              //Check if image already is in array
+              if (String(taggedImages).includes(data[i].images[x])) {
+                console.log("images already added to array")
+              } else {
+                taggedImages.push(data[i].images[x])
+              }  
               //console.log("taggedImages: " + data[i].images[x])
             }
           }
-          console.log("final taggedImages: " + JSON.stringify(taggedImages))
+          //console.log("final taggedImages: " + JSON.stringify(taggedImages))
           return;
         })
         .catch(function (err) {
@@ -454,7 +460,7 @@ module.exports = app => {
 
     async function getImages() {
       console.log("getting images")
-      console.log("userSavedImages: " + userSavedImages)
+      //console.log("userSavedImages: " + userSavedImages)
 
       if (taggedImages) {
 
@@ -466,7 +472,6 @@ module.exports = app => {
               }
             }
           }
-          console.log("here I am")
           const f = taggedImagesArr
             .map(file => {
               if (
@@ -475,6 +480,7 @@ module.exports = app => {
               ) {
                 file.isImage = true;
                 file.filename = "image/" + file.filename;
+                //console.log ("file.filename: " + file.filename)
               } else {
                 file.isImage = false;
               }

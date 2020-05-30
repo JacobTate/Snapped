@@ -25,7 +25,7 @@ function unsaveImage(imageId, userEmail, imageIdArr, setPlus, setMinus) {
     setMinus(false)
     setPlus(true)
     // console.log("showMinus: " + showMinus)
-    console.log("unsave imageId: " + imageId)
+    //console.log("unsave imageId: " + imageId)
     axios.post("/unsave", {
         imageId,
         userEmail,
@@ -36,8 +36,8 @@ function unsaveImage(imageId, userEmail, imageIdArr, setPlus, setMinus) {
 
 const Example = (props) => {
 
-    console.log("props: " + JSON.stringify(props))
-    console.log("userEmail savedImageCard: " + props.userEmail)
+    //console.log("props: " + JSON.stringify(props))
+    //console.log("userEmail savedImageCard: " + props.userEmail)
     //console.log("isSavedImage: " + props.isSavedImage)
 
     let initPlus = false;

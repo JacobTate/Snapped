@@ -29,6 +29,7 @@ const Profile = () => {
       </Row>
       <Row>
         <Highlight>{JSON.stringify(user, null, 2)}</Highlight>
+        {/* <p>{JSON.stringify(user, null, 2)}</p> */}
       </Row>
     </Container>
   );
