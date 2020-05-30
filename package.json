@@ -38,6 +38,7 @@
     "multer": "^1.4.2",
     "multer-gridfs-storage": "^4.1.0",
     "path": "^0.12.7",
+    "react-multi-carousel": "^2.5.5",
     "react-responsive-carousel": "^3.2.7",
     "react-select": "^3.1.0"
   }
