@@ -38,7 +38,7 @@ export default () => {
         {
           Images.map((image, index) => {
             return (
-              <Image src={image.path} style={{ width: "400px", height: "400px" }} />
+              <Image src={image.path} style={{ width: "400px", height: "360px" }} />
 
 
             )

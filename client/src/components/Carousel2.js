@@ -27,7 +27,7 @@ export default () => {
   };
   return (
     <div>
-      <Carousel2 autoPlay
+      <Carousel2 autoPlay autoPlaySpeed={3000}
         ssr
         partialVisbile
         // deviceType={deviceType}
@@ -37,7 +37,7 @@ export default () => {
         {
           Images2.map((image, index) => {
             return (
-              <Image src={image.path} style={{ width: "400px", height: "400px" }} />
+              <Image src={image.path} style={{ width: "400px", height: "360px" }} />
 
 
             )
