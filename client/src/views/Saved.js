@@ -4,7 +4,7 @@ import { Container, Row, Col } from "reactstrap";
 //import Highlight from "../components/Highlight";
 import Loading from "../components/Loading";
 import { useAuth0 } from "../react-auth0-spa";
-
+import savedSnapps from "../assets/savedSnapps.jpg";
 import ImageRenderSaved from "../utils/ImageRenderSaved";
 
 const Saved = () => {
@@ -17,16 +17,18 @@ const Saved = () => {
   return (
     <Container className="mb-5">
       <Row className="align-items-center profile-header mb-5 text-center text-md-left">
-        <Col md>
-          <h2>Saved Snapps</h2>
+        {<Col md>
+          <h2 className="savedSnapps"></h2>
           {/* <h2>{user.name}</h2> */}
-          <p className="lead text-muted">{user.email}</p>
-        </Col>
+          <p className="lead text-muted">{/*user.email*/}</p>
+        </Col>}
+        <img src={savedSnapps} width="100%" height="" alt="savedSnapps" />
       </Row>
 
-      <ImageRenderSaved userEmail={user.email}/>  
+      <ImageRenderSaved userEmail={user.email} />
 
     </Container>
+
   );
 };
 
