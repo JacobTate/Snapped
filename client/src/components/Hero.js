@@ -20,7 +20,7 @@ class Hero extends Component {
   }
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
-    console.log(`Option selected:`, selectedOption);
+    //console.log(`Option selected:`, selectedOption);
     //console.log('state: ' + JSON.stringify(this.state))
   }
 

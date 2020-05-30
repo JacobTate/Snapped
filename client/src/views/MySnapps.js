@@ -17,7 +17,7 @@ const MySnapps = function () {
   const handleChange = event => {
     //fileSelected="iamge.png"
     //setFileSelected("image.png")
-    console.log(`Selected file - ${event.target.files[0].name}`);
+    //console.log(`Selected file - ${event.target.files[0].name}`);
     setFileSelected(event.target.files[0].name)
   };
   return (
