@@ -1,90 +1,50 @@
 [
     {
         "alt": "pic1",
-        "path": "/assets/pic1.png"
+        "path": "/assets/pic1.jpg"
     },
     {
         "alt": "pic2",
-        "path": "/assets/pic2.png"
+        "path": "/assets/pic2.jpg"
     },
     {
         "alt": "pic3",
-        "path": "/assets/pic3.png"
-    },
-    {
-        "alt": "pic4",
-        "path": "/assets/pic4.png"
-    },
-    {
-        "alt": "pic5",
-        "path": "/assets/pic5.png"
-    },
-    {
-        "alt": "pic6",
-        "path": "/assets/pic6.png"
+        "path": "/assets/pic3.jpg"
     },
     {
         "alt": "pic7",
-        "path": "/assets/pic7.png"
+        "path": "/assets/pic7.jpg"
     },
     {
         "alt": "pic8",
-        "path": "/assets/pic8.png"
+        "path": "/assets/pic8.jpg"
     },
     {
         "alt": "pic9",
-        "path": "/assets/pic9.png"
-    },
-    {
-        "alt": "pic10",
-        "path": "/assets/pic10.png"
-    },
-    {
-        "alt": "pic11",
-        "path": "/assets/pic11.png"
-    },
-    {
-        "alt": "pic12",
-        "path": "/assets/pic12.png"
+        "path": "/assets/pic9.jpg"
     },
     {
         "alt": "pic13",
-        "path": "/assets/pic13.png"
+        "path": "/assets/pic13.jpg"
     },
     {
         "alt": "pic14",
-        "path": "/assets/pic14.png"
+        "path": "/assets/pic14.jpg"
     },
     {
         "alt": "pic15",
-        "path": "/assets/pic15.png"
-    },
-    {
-        "alt": "pic16",
-        "path": "/assets/pic16.png"
-    },
-    {
-        "alt": "pic17",
-        "path": "/assets/pic17.png"
-    },
-    {
-        "alt": "pic18",
-        "path": "/assets/pic18.png"
+        "path": "/assets/pic15.jpg"
     },
     {
         "alt": "pic19",
-        "path": "/assets/pic19.png"
+        "path": "/assets/pic19.jpg"
     },
     {
         "alt": "pic20",
-        "path": "/assets/pic20.png"
+        "path": "/assets/pic20.jpg"
     },
     {
         "alt": "pic21",
-        "path": "/assets/pic21.png"
-    },
-    {
-        "alt": "pic22",
-        "path": "/assets/pic22.png"
+        "path": "/assets/pic21.jpg"
     }
 ]
