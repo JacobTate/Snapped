@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container } from "reactstrap";
 import  TagSelect from "../utils/TagSelect";
-
+import mySnapps from "../assets/mySnapps.png";
 import { useAuth0 } from "../react-auth0-spa";
 import ImageRender from "../utils/ImageRender";
 
@@ -23,6 +23,8 @@ const MySnapps = function () {
   return (
     <Container>
       <form action="/upload" method="POST" encType="multipart/form-data">
+      <h2 className="mySnapps"></h2>
+      <img src={mySnapps} id="savedSnapps" width="75%" height="" alt="savedSnapps" />
       <TagSelect defaultText={"Select a location"}/>
         <p className="lead text-muted">{user.email}</p>
         <input type="hidden" name="userEmail" value={user.email}
