@@ -24,12 +24,11 @@ const Profile = () => {
         </Col>
         <Col md>
           <h2>{user.name}</h2>
-          <p className="lead text-muted">{user.email}</p>
+          {/* <p className="lead text-muted">{user.email}</p> */}
         </Col>
       </Row>
       <Row>
         <Highlight>{JSON.stringify(user, null, 2)}</Highlight>
-        {/* <p>{JSON.stringify(user, null, 2)}</p> */}
       </Row>
     </Container>
   );
