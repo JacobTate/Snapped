@@ -63,7 +63,7 @@ const Example = (props) => {
     return (
         <div>
         <Modal isOpen={modal} toggle={toggle} >
-        <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+        <ModalHeader toggle={toggle}>View Tags</ModalHeader>
         <ModalBody>
         <ModalTagsDisplay thisImage={props.thisImage} showDeleteButton={false}/>
         </ModalBody>

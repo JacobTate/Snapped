@@ -4,7 +4,7 @@ const multer = require("multer");
 const gridFsStorage = require("multer-gridfs-storage");
 const grid = require("gridfs-stream");
 const crypto = require("crypto");
-const mongoURI = "mongodb://localhost/snapped";
+const mongoURI = process.env.MONGODB_URI;
 const conn = mongoose.createConnection(mongoURI);
 mongoose.connect(mongoURI, {
   useNewUrlParser: true
@@ -865,4 +865,13 @@ module.exports = app => {
         res.json(err);
       });
   });
+    //the auth0 infomation
+ app.get("/api/getAuth", (req, res) => {
+  const auth_config = {
+    domain: process.env.DOMAIN,
+    clientId: process.env.CLIENTID
+  };
+  res.json(auth_config)
+ });
+
 };
