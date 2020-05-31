@@ -1,9 +1,10 @@
 import React from "react";
 import { Container, Row, Col, Button } from "reactstrap";
-import { NavLink as RouterNavLink } from "react-router-dom"; //FIXME:
+import { NavLink as RouterNavLink } from "react-router-dom";
 import Loading from "../components/Loading";
 import { useAuth0 } from "../react-auth0-spa";
 import ImageRenderSearch from "../utils/ImageRenderSearch";
+import searchResults from "../assets/searchResults.jpg";
 
 const SearchResults = ({history, location}) => {
 
@@ -29,6 +30,17 @@ const SearchResults = ({history, location}) => {
 
   return (
     <Container className="mb-5">
+      <Row className="align-items-center profile-header mb-5 text-center text-md-left">
+        <img src={searchResults} id="searchResults" width="75%" height="" alt="searchResults" />
+        {/* <p className="lead text-muted">{dspSearchTags}</p> */}
+        <Col md>
+          {/* <h2>Search Results</h2> */}
+          {/* <p className="lead text-muted">{user.email}</p> */}
+          {/* <p className="lead text-muted">{dspSearchTags}</p> */}
+        </Col>
+        {/* <img src={searchResults} id="savedSnapps" width="75%" height="" alt="searchResults" /> */}
+      </Row>
+      <Row>
       <Button
         tag={RouterNavLink}
         to="/"
@@ -39,13 +51,7 @@ const SearchResults = ({history, location}) => {
       >
         Go Back
       </Button>
-
-      <Row className="align-items-center profile-header mb-5 text-center text-md-left">
-        <Col md>
-          <h2>Search Results</h2>
-          {/* <p className="lead text-muted">{user.email}</p> */}
           <p className="lead text-muted">{dspSearchTags}</p>
-        </Col>
       </Row>
 
       <ImageRenderSearch searchTags={searchTags} userEmail={user.email}/>  
