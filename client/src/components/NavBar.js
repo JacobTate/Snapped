@@ -127,7 +127,7 @@ const NavBar = () => {
 
               <NavItem>
                 <Button
-                  id="mySnapps"
+                  id="mySnapped"
                   tag={RouterNavLink}
                   to="/mysnapps"
                   exact

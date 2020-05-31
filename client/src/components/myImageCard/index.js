@@ -21,12 +21,6 @@ const Example = (props) => {
     
       const toggle = () => {
           setModal(!modal);
-        //   if(!modal){
-        //       axios.get(`/api/tags/${props.thisImage}`)
-        //       .then(res => {
-        //        console.log(res);
-        //       });
-        //   };
     };
     const deleteBtn = (fileId) => {
         axios.post(`/api/delete/`,{
@@ -38,14 +32,11 @@ const Example = (props) => {
     return (
         <div>  
         <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle}>Modal title</ModalHeader>
-        <ModalBody>
-            <ModalForm imageId={props.thisImage}/>
-        </ModalBody>
+        <ModalHeader toggle={toggle}>View update and delete tags</ModalHeader>
         <ModalFooter>
-          <ModalTagsDisplay thisImage={props.thisImage}/>
-          <Button color="secondary" onClick={toggle}>Cancel</Button>
+          <ModalTagsDisplay thisImage={props.thisImage} showDeleteButton={true}/>
         </ModalFooter>
+        <Button color="secondary" onClick={toggle}>Cancel</Button>
       </Modal>
         <CardDeck>
             <Card className="CardListItem-main-card">

@@ -1,10 +1,10 @@
 import React from "react";
-import Carousel from 'react-multi-carousel';
+import Carousel2 from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import Images from "../utils/Images.json";
+import Images2 from "../utils/Images2.json";
 import "semantic-ui-css/semantic.min.css";
 import { Image } from "semantic-ui-react";
-import "./Carousel.css";
+import "./Carousel2.css";
 
 
 export default () => {
@@ -27,16 +27,15 @@ export default () => {
   };
   return (
     <div>
-      <Carousel autoPlay 
+      <Carousel2 autoPlay autoPlaySpeed={3000}
         ssr
         partialVisbile
         // deviceType={deviceType}
         itemClass="image-item"
         responsive={responsive}
       >
-
         {
-          Images.map((image, index) => {
+          Images2.map((image, index) => {
             return (
               <Image src={image.path} style={{ width: "400px", height: "360px" }} />
 
@@ -44,7 +43,7 @@ export default () => {
             )
           })
         }
-      </Carousel>
+      </Carousel2>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import axios from "axios";
+
 class TagSelect extends Component {
 constructor (props) {
     super(props);
@@ -20,10 +21,16 @@ constructor (props) {
           tag: event.target.value
       });
   };
+  showDefault = () => {
+      return(
+        <option className="activityTagDefaultOption" value="">Select a tag</option>
+
+      );
+  };
   render () {
       return (
       <select className="activityTagSelect" onChange={this.handleClick} required>
-          <option className="activityTagDefaultOption" value="">Select a tag</option>
+          {this.props.defaultOption()}
       {    
           this.state.tagsArr.map((tag, i) => (
           <option className="activityTagOption" value={tag} key={i}>{tag}</option>

@@ -22,7 +22,7 @@ constructor (props) {
   }
   render () {
       return (
-      <select className="locationTagSelect" onClick={this.handleSubmit} required><option className="locationTagDefaultOption" value="">Select a location</option>
+      <select className="locationTagSelect" onClick={this.handleSubmit} required><option className="locationTagDefaultOption" value="">{this.props.defaultText}</option>
       {    
           this.state.tagsArr.map((tag, i) => (
           <option className="locationTagOption" value={tag} key={i}>{tag}</option>
