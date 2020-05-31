@@ -24,7 +24,7 @@ const MySnapps = function () {
     <Container>
       <form action="/upload" method="POST" encType="multipart/form-data">
       <h2 className="mySnapps"></h2>
-      <img src={mySnapps} id="savedSnapps" width="75%" height="" alt="savedSnapps" />
+      <img src={mySnapps} id="mySnapps" width="75%" height="" alt="mySnapps" />
       <TagSelect defaultText={"Select a location"}/>
         <p className="lead text-muted">{user.email}</p>
         <input type="hidden" name="userEmail" value={user.email}
