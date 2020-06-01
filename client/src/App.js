@@ -35,10 +35,10 @@ const App = () => {
         <Container className="flex-grow-1 mt-5">
           <Switch>
             <Route path="/" exact component={Home} />
-            <PrivateRoute exact path="/profile" component={Profile} />
-            <PrivateRoute exact path="/saved" component={Saved} />
-            <PrivateRoute exact path="/mysnapps" component={MySnapps} />
-            <PrivateRoute exact path="/searchresults" component={SearchResults} />
+            <PrivateRoute path="/profile" exact component={Profile} />
+            <PrivateRoute path="/saved" exact component={Saved} />
+            <PrivateRoute path="/mysnapps" exact component={MySnapps} />
+            <PrivateRoute path="/searchresults" exact component={SearchResults} />
           </Switch>
         </Container>
         <Footer />
