@@ -8,7 +8,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.17",
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "highlight.js": "^9.15.6",
+    "highlight.js": "^10.4.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-multi-carousel": "^2.5.5",
